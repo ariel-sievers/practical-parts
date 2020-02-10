@@ -1,7 +1,15 @@
 <div class="container">
-  <label for="icon" class="icon">Show Menu</label>
-  <input type="checkbox" id="icon" role="button">
-  <ul>
+  <!--shows when screen size is smaller-->
+  <button [ngClass]="{'change': condition}" (click)="myFunc()">
+    <span class="hamburger">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
+    </span>
+    <span class="button-text">Menu</span>
+  </button>
+  <!--navbar-->
+  <ul [ngClass]="{'show-menu': condition}">
     <li><a [routerLink]="['/']">Home</a></li>
     <li><a [routerLink]="['/products']">Our Products</a></li>
     <li><a [routerLink]="['/about']">About Us</a></li>

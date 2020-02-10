@@ -1,3 +1,6 @@
+body
+  margin: 0
+  
 ul 
   list-style-type: none
   margin: 0 auto
@@ -16,31 +19,64 @@ li
       decoration: none
     color: white
 
-
-.icon
-  text:
-    decoration: none
-    align: center
-  background-color: blue
-  padding: 10px 0
+button
+  border: none
   display: none
+  width: 170px
+  margin:
+    left: 10px
+    right: 10px
 
-input[type="checkbox"]
-  display: none
+.button-text
+  font-size: 2rem
+  position: relative
+  top: -20px
+  line-height: 0
 
-input[type="checkbox"]:checked ~ ul
-  display: block
+.hamburger
+  padding: 14px 16px
+  width: 35px
 
+.bar1, .bar2, .bar3
+  width: 35px
+  height: 5px
+  background-color: white
+  margin: 6px 0
+  transition: 0.4s
+
+.change .bar1
+  transform: rotate(-45deg) translate(-9px, 6px)
+
+.change .bar2
+  opacity: 0
+
+.change .bar3
+  transform: rotate(45deg) translate(-8px, -8px)
+
+//make navbar responsive
 @media only screen and (max-width:600px)
   ul
     position: static
-    display: none
-    overflow: hidden
+    display: none //hide menu
+    overflow-x: hidden
+    overflow-y: auto
+    background-color: #333
+    width: 100%
   li
     margin-bottom: 10px
   ul li, li a
     width: 100%
-  .icon
+  .container
+    background-color: black
+    text-align: center
+    align-items: center
+  button
+    color: white
     display: block
+    background-color: transparent
+    cursor: pointer
+  .show-menu
+    display: inline-block
+    
     
 
