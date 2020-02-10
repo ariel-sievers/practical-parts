@@ -8,9 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   condition = false;
-  myFunc() {
+  showMenu() {
     this.condition = !this.condition;
-
   }
 
   constructor() { }
