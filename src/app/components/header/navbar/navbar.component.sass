@@ -1,0 +1,46 @@
+ul 
+  list-style-type: none
+  margin: 0 auto
+  padding: 0
+  overflow: auto
+  background-color: black
+  text-align: center
+
+li
+  display: inline
+  a
+    display: inline-block
+    padding: 14px 16px
+    text:
+      align: center
+      decoration: none
+    color: white
+
+
+.icon
+  text:
+    decoration: none
+    align: center
+  background-color: blue
+  padding: 10px 0
+  display: none
+
+input[type="checkbox"]
+  display: none
+
+input[type="checkbox"]:checked ~ ul
+  display: block
+
+@media only screen and (max-width:600px)
+  ul
+    position: static
+    display: none
+    overflow: hidden
+  li
+    margin-bottom: 10px
+  ul li, li a
+    width: 100%
+  .icon
+    display: block
+    
+
