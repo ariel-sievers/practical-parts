@@ -64,8 +64,8 @@ input
 
 .cancel-btn-1:before
   height: 20px
-  top: -2px
-  left: 5px
+  top: -4px
+  left: 4px
 
 .cancel
   content: ""
@@ -73,12 +73,34 @@ input
   height: 0
   width: 2px
   background-color: #e3d3d8
-  top: 12px
-  left: 19px
+  top: 10px
+  left: 18px
   transform: rotate(45deg)
   transition: 0.4s ease-in-out
 
 .cancel-btn-2
   height: 20px
-  //top: 7px
   
+@media only screen and (max-width:600px)
+  input
+    font:
+      size: 1.5em
+    color: #e3d3d8
+    background-color: transparent
+    border: none
+      bottom: 3px solid #e3d3d8
+      radius: 0
+    width: 75%
+  .reset-btn, .reset-btn:hover
+    background-color: transparent
+  .cancel, .cancel-btn-1:before
+    background-color: #e3d3d8
+  .cancel
+    top: 8px
+  .cancel-btn-1:before
+    top: -6px
+  .hide
+    background-color: transparent
+    border: none 
+      bottom: 3px solid #e3d3d8
+      radius: 0

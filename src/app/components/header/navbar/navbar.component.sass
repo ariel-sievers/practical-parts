@@ -1,3 +1,6 @@
+app-search-bar
+  display: none
+
 ul 
   list-style-type: none
   margin: 0 auto
@@ -64,6 +67,9 @@ button:focus
 .change .bar3
   transform: rotate(45deg) translate(-9px, -8px)
 
+.hide
+  display: none
+
 //make navbar responsive
 @media only screen and (max-width:600px)
   ul
@@ -74,8 +80,11 @@ button:focus
     width: 100%
   li
     margin-bottom: 10px
+    
   ul li, li a
     width: 100%
+  app-search-bar
+    display: block
   .container
     background-color: #191216
     text-align: center
@@ -90,6 +99,8 @@ button:focus
   .show-menu //show menu when hamburger icon is clicked on
     display: inline-block
     border-top: 1px #e8d3d8 solid
+  .hide
+    display: block
     
   
     

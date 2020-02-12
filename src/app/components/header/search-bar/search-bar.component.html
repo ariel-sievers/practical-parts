@@ -1,6 +1,6 @@
 <form method="get" class="search-bar">
     <input type="text" id="search" [ngClass]="{'square': isSquare}" placeholder="Search our products...">
-    <button type="reset" class="search-bar reset-btn" [ngClass]="{'close': isClosed}" (click)="expand()">
+    <button type="reset" class="search-bar reset-btn" [ngClass]="{'close': isClosed, 'hide': !isClosed}" (click)="expand()">
         <span class="magnifying-glass" [ngClass]="{'cancel-btn-1': !isClosed}"></span>
         <span class="cancel" [ngClass]="{'cancel-btn-2': !isClosed}"></span>
     </button>

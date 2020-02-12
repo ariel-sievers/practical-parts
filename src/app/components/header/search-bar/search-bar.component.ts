@@ -16,7 +16,6 @@ export class SearchBarComponent implements OnInit {
     this.isClosed = !this.isClosed;
   }
 
-
   constructor() { }
 
   ngOnInit() {
