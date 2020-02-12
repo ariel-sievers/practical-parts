@@ -1,0 +1,84 @@
+input
+  box-sizing: border-box
+  background-color: #eef0f6
+  outline: 0
+  border: 2px solid #003366
+    radius: 5px 0 0 5px
+    right: none
+  width: 250px
+  height: 40px
+  font:
+    family: 'Open Sans', sans-serif
+    weight: regular
+    size: 1em
+  color: #003366
+  padding: 0.5rem
+  transition: width 0.4s ease-out, border-color 0.4s ease-in
+
+.square
+  width: 0
+  padding: 0
+  border: none
+
+.reset-btn
+  box-sizing: border-box
+  position: absolute
+  background-color: #003366
+  outline: 0
+  border: none
+    radius: 0 5px 5px 0
+  width: 40px
+  height: 40px
+  padding: 0.5rem
+  cursor: pointer
+
+.close
+  border-radius: 5px
+
+.reset-btn:hover
+  background-color: #00284d
+
+.magnifying-glass /* circle */
+  position: absolute
+  border: 2px solid #e8d3d8
+    radius: 100%
+  width: 10px
+  height: 10px
+  left: 12px
+  top: 12px
+  transition: 0.2s ease-in
+
+.magnifying-glass:before /* handle */
+  content: ""
+  position: absolute
+  width: 2px
+  height: 7px
+  background-color: #e8d3d8
+  transform: rotate(-45deg)
+  transition: 0.4s ease-in-out
+  top: 9px
+  left: 11px
+
+.cancel-btn-1
+  border-color: transparent
+
+.cancel-btn-1:before
+  height: 20px
+  top: -2px
+  left: 5px
+
+.cancel
+  content: ""
+  position: absolute
+  height: 0
+  width: 2px
+  background-color: #e3d3d8
+  top: 12px
+  left: 19px
+  transform: rotate(45deg)
+  transition: 0.4s ease-in-out
+
+.cancel-btn-2
+  height: 20px
+  //top: 7px
+  
