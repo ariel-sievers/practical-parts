@@ -16,11 +16,11 @@
   <!--navbar-->
   <ul [ngClass]="{'show-menu': condition}">
     <li><app-search-bar></app-search-bar></li>
-    <li><a [routerLink]="['/']">Home</a></li>
-    <li><a [routerLink]="['/products']">Our Products</a></li>
-    <li><a [routerLink]="['/about']">About Us</a></li>
-    <li><a [routerLink]="['/contact']">Contact Us</a></li>
-    <li class="hide"><a [routerLink]="['/sign_in']">Sign In</a></li>
-    <li class="hide"><a [routerLink]="['/create_account']">Create Account</a></li>
+    <li><a (click)="showMenu()" [routerLink]="['/']">Home</a></li>
+    <li><a (click)="showMenu()" [routerLink]="['/products']">Our Products</a></li>
+    <li><a (click)="showMenu()" [routerLink]="['/about']">About Us</a></li>
+    <li><a (click)="showMenu()" [routerLink]="['/contact']">Contact Us</a></li>
+    <li class="hide"><a (click)="showMenu()" [routerLink]="['/sign_in']">Sign In</a></li>
+    <li class="hide"><a (click)="showMenu()" [routerLink]="['/create_account']">Create Account</a></li>
   </ul>
 </div>
