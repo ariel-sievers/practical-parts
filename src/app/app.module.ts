@@ -11,6 +11,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './components/header/navbar/navbar.component';
 import { SearchBarComponent } from './components/header/search-bar/search-bar.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SearchBarComponent } from './components/header/search-bar/search-bar.co
     ContactComponent,
     HomeComponent,
     NavbarComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    BreadcrumbComponent
   ],
   imports: [
     BrowserModule,

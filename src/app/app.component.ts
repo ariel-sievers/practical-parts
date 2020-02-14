@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
     <!-- header -->
     <app-header></app-header>
 
+    <app-breadcrumb></app-breadcrumb>
+
     <!-- routes will be rendered here -->
     <router-outlet></router-outlet>
 

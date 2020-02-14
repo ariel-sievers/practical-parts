@@ -7,10 +7,34 @@ import { ContactComponent } from './pages/contact/contact.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'products', component: ProductsComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'contact', component: ContactComponent }
+  { 
+    path: '',
+    component: HomeComponent,
+    data: {
+      breadcrumb: 'Home',
+    },
+    children: [
+      {
+        path: 'products',
+        component: ProductsComponent,
+        data: {
+          breadcrumb: 'Products',
+        },
+      }, {
+        path: 'about',
+        component: AboutComponent,
+        data: {
+          breadcrumb: 'About Practical Parts',
+        },
+      }, {
+        path: 'contact',
+        component: ContactComponent,
+        data: {
+          breadcrumb: 'Contact Information',
+        },
+      }
+    ]
+  }
 ];
 
 @NgModule({
