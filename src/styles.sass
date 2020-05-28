@@ -8,8 +8,38 @@
 /* font-family: 'Montserrat', sans-serif.....subheader font, regular */
 /* font-family: 'Open Sans', sans-serif......main font, regular */
 
+/* variables */
+$small: 576px
+$medium: 768px
+$large: 992px
+$extra-large: 1200px
+
 
 /* other stylings */ 
 body
   margin: 0
+
+.container
+    padding-right: 15rem
+    padding-left: 15rem
+    margin-right: auto
+    margin-left: auto
+
+@media (max-width: $small)
+  .container
+    max-width: 100%
+
+@media (max-width: $medium)
+  .container
+    max-width: 540px
+
+@media (max-width: $large)
+  .container
+    max-width: 960px
+
+@media (max-width: $extra-large)
+  .container
+    max-width: 1140px
+
+
 

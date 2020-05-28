@@ -1,19 +1,21 @@
-<div class="container">
-  <!--shows when screen size is smaller-->
-<div class="box">
-  <button class="menu-btn" [ngClass]="{'change': condition}" (click)="showMenu()">
-    <span class="hamburger">
-      <div class="bar1"></div>
-      <div class="bar2"></div>
-      <div class="bar3"></div>
-    </span>
-    <span class="button-text">Menu</span>
-  </button>
-  <button class="cart-btn">
-    <i class="fa fa-shopping-cart"></i>
-  </button>
-</div>
-  <!--navbar-->
+<div class="header-container">
+
+  <!-- shows when screen size is smaller -->
+  <div class="box">
+    <button class="menu-btn" [ngClass]="{'change': condition}" (click)="showMenu()">
+      <span class="hamburger">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </span>
+      <span class="button-text">Menu</span>
+    </button>
+    <button class="cart-btn">
+      <i class="fa fa-shopping-cart"></i>
+    </button>
+  </div>
+
+  <!-- navbar -->
   <ul [ngClass]="{'show-menu': condition}">
     <li><app-search-bar></app-search-bar></li>
     <li><a (click)="showMenu()" [routerLink]="['/']">Home</a></li>

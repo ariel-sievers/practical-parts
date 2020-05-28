@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
-import { GraphQLError } from 'graphql';
-import { environment } from 'src/environments/environment';
+import { ShopService } from 'src/app/services/shop.service';
 
 @Component({
   selector: 'app-home',
@@ -11,31 +8,25 @@ import { environment } from 'src/environments/environment';
 })
 export class HomeComponent implements OnInit {
   shop: any;
-  loading = true;
+  email: string;
+  domain: string;
 
-  constructor(private apollo: Apollo) { }
+  constructor(private shopService: ShopService) {}
 
   ngOnInit() {
-    this.testQuery();
+    this.testRequest();
   }
 
-  testQuery() {
-    return this.apollo
-      .watchQuery({
-        query: gql`
-          query {
-            shop {
-              id
-              name
-              email
-            }
-          }
-        `,
-      })
-      .valueChanges.subscribe(result => {
-        this.shop = result.data
-        this.loading = result.loading;
-      });
+  testRequest(): void {
+    this.shopService.getShop().subscribe(
+      data => {
+        this.shop = data,
+        this.email = data.email,
+        this.domain = data.domain
+        console.log(this.shop) },
+      err => console.log(err),
+      () => console.log('done loading shop information')
+    )
   }
 
 }
