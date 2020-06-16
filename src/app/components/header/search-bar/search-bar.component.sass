@@ -1,17 +1,18 @@
+@import '../../../../assets/variables'
+  
 input
   box-sizing: border-box
   background-color: #eef0f6
   outline: 0
-  border: 2px solid #003366
+  border: 2px solid $color-dark-accent
     radius: 5px 0 0 5px
     right: none
   width: 250px
   height: 40px
   font:
-    family: 'Open Sans', sans-serif
-    weight: regular
+    family: $text-regular
     size: 1em
-  color: #003366
+  color: $color-dark-accent
   padding: 0.5rem
   transition: width 0.4s ease-out, border-color 0.4s ease-in
 
@@ -23,7 +24,7 @@ input
 .reset-btn
   box-sizing: border-box
   position: absolute
-  background-color: #003366
+  background-color: $color-dark-accent
   outline: 0
   border: none
     radius: 0 5px 5px 0
@@ -36,11 +37,11 @@ input
   border-radius: 5px
 
 .reset-btn:hover
-  background-color: #00284d
+  background-color: $color-dark-accent-darker
 
 .magnifying-glass /* circle */
   position: absolute
-  border: 2px solid #e8d3d8
+  border: 2px solid $color-light-accent
     radius: 100%
   width: 10px
   height: 10px
@@ -53,7 +54,7 @@ input
   position: absolute
   width: 2px
   height: 7px
-  background-color: #e8d3d8
+  background-color: $color-light-accent
   transform: rotate(-45deg)
   transition: 0.4s ease-in-out
   top: 9px
@@ -72,7 +73,7 @@ input
   position: absolute
   height: 0
   width: 2px
-  background-color: #e3d3d8
+  background-color: $color-light-accent
   top: 10px
   left: 18px
   transform: rotate(45deg)
@@ -85,16 +86,16 @@ input
   input
     font:
       size: 1.5em
-    color: #e3d3d8
+    color: $color-light-accent
     background-color: transparent
     border: none
-      bottom: 3px solid #e3d3d8
+      bottom: 3px solid $color-light-accent
       radius: 0
     width: 75%
   .reset-btn, .reset-btn:hover
     background-color: transparent
   .cancel, .cancel-btn-1:before
-    background-color: #e3d3d8
+    background-color: $color-light-accent
   .cancel
     top: 8px
   .cancel-btn-1:before
@@ -102,5 +103,5 @@ input
   .hide
     background-color: transparent
     border: none 
-      bottom: 3px solid #e3d3d8
+      bottom: 3px solid $color-light-accent
       radius: 0

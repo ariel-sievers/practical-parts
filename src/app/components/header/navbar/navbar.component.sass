@@ -1,3 +1,5 @@
+@import '../../../../assets/variables'
+  
 app-search-bar
   display: none
 
@@ -6,7 +8,7 @@ ul
   margin: 0 auto
   padding: 0
   overflow: auto
-  background-color: #191216
+  background-color: $color-main
   text-align: center
 
 li
@@ -17,14 +19,14 @@ li
     text:
       align: center
       decoration: none
-    color: #e8d3d8
+    color: $color-light-accent
     font:
       family: 'Open Sans', sans-serif
       weight: regular
       size: 1.5em
   a:hover
-    background-color: #2c2027
-    color: #d2adb4
+    background-color: $color-main-lighter
+    color: $color-light-accent-darker
 
 .menu-btn
   border: none
@@ -45,7 +47,7 @@ li
   position: relative
   top: -20px
   line-height: 0
-  color: #e8d3d8
+  color: $color-light-accent
 
 .hamburger
   padding: 14px 16px
@@ -54,7 +56,7 @@ li
 .bar1, .bar2, .bar3
   width: 35px
   height: 5px
-  background-color: #e8d3d8
+  background-color: $color-light-accent
   margin: 6px 0
   transition: 0.4s
 
@@ -85,26 +87,27 @@ li
   app-search-bar
     display: block
   .container
-    background-color: #191216
+    background-color: $color-main
     text-align: center
     align-items: center
     position: relative
     z-index: 1
   .menu-btn
     display: block
-    color: #e8d3d8
+    color: $color-light-accent
     align-self: flex-start
     background-color: transparent
     cursor: pointer
   .show-menu //show menu when hamburger icon is clicked on
     display: inline-block
-    border-top: 1px #e8d3d8 solid
+    border-top: 1px $color-light-accent solid
   .hide
     display: block
   .box
     display: flex
     flex-direction: row
     justify-content: space-between
+    background-color: $color-main
   .cart-btn
     display: block
     align-self: flex-end
@@ -117,7 +120,7 @@ li
   .fa-shopping-cart
     font:
       size: 48px
-    color: #e8d3d8
+    color: $color-light-accent
     
   
     

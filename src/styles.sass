@@ -3,21 +3,40 @@
 /* fonts */
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Serif:300i,600|Montserrat|Open+Sans&display=swap')
 
-
-/* font-family: 'IBM Plex Serif', serif......main header font, semi-bold and light italic */
-/* font-family: 'Montserrat', sans-serif.....subheader font, regular */
-/* font-family: 'Open Sans', sans-serif......main font, regular */
-
 /* variables */
-$small: 576px
-$medium: 768px
-$large: 992px
-$extra-large: 1200px
+@import './assets/variables'
 
+@import '~aos/dist/aos.css'
 
-/* other stylings */ 
+html, body
+  overflow-x: hidden
+
 body
   margin: 0
+
+h1
+  font-family: $main-header
+  font-weight: $semi-bold
+  color: $color-dark-accent
+  &.text-light-italic
+    font-weight: $light-italic
+    font-style: italic
+    color: $color-dark-accent-lighter
+
+h2
+  font-family: $subheader
+
+p
+  font-family: $text-regular
+  color: $color-main
+
+a
+  color: $color-dark-accent-lightest
+  cursor: pointer
+  text-decoration: none
+  &:hover
+    color: $color-dark-accent-lightest
+    text-decoration: underline
 
 .container
     padding-right: 15rem

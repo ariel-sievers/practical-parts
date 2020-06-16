@@ -7,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  condition = false;
+  show = false;
   
   showMenu() {
-    this.condition = !this.condition;
+    this.show = !this.show;
   }
 
   constructor() { }

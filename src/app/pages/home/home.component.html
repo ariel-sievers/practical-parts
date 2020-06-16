@@ -1,4 +1,4 @@
-<div *ngIf="shop" class="container">
+<div [hidden]="router.url !== '/'" *ngIf="shop" class="container">
     <p>
         email: {{ email }} 
      </p>
@@ -6,3 +6,5 @@
        domain: {{ domain }} 
     </p>
 </div>
+
+<router-outlet></router-outlet>

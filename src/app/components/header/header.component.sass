@@ -1,3 +1,4 @@
+@import '../../../assets/variables'
 
 *
   box-sizing: border-box
@@ -15,17 +16,8 @@ img
 #account-options
   flex: 2
   float: right
-  font:
-    family: 'Open Sans', sans-serif
-    weight: regular
-    size: 1em
-  color: #191216
-  a
-    color: #4D5A97
-    cursor: pointer
-  a:hover
-    color: #3d4776
-    text-decoration: underline
+  font-size: 1em
+  color: $color-main
 
 .site-header
   width: 100%
@@ -74,10 +66,9 @@ app-search-bar
   height: 40px
   background-color: #eef0f6
   font:
-    family: 'Open Sans', sans-serif
-    weight: regular
+    family: $text-regular
     size: 1.25em
-  color: #003366
+  color: $color-dark-accent
   outline: 0
   border: none
     radius: 5px
@@ -89,9 +80,8 @@ app-search-bar
   cursor: pointer
 
 .fa-shopping-cart
-  font:
-    size: 27px
-  color: #003366
+  font-size: 27px
+  color: $color-dark-accent
 
 
 @media only screen and (max-width:600px)

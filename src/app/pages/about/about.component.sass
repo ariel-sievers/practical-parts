@@ -1,0 +1,49 @@
+@import '../../../assets/variables'
+    
+#introduction
+    text-align: left
+    //padding: 0 10rem
+    padding: 0 10rem 2rem 10rem
+    .text-larger
+        font-size: 1.15rem
+
+.about-adam, .about-liam
+    background-color: $color-main-lighter
+    color: $color-light-accent
+    margin: 0 -9999rem
+    padding: 2rem 9999rem
+    display: grid
+    grid-template-rows: 5% 1fr
+    justify-items: center
+    align-items: center
+    column-gap: 2rem
+    h2
+        grid-column: 1 / 3
+        grid-row-start: 1
+    img, p
+        grid-row-start: 2
+    img
+        width: 100%
+        transform: scaleX(-1)
+        border-radius: 50px
+    p
+        text-align: justify
+        color: $color-light-accent
+
+.about-adam
+    grid-template-columns: 35% 1fr
+    img
+        grid-column-start: 1
+    p
+        grid-column-start: 2
+
+.about-liam
+    grid-template-columns: 1fr 35%
+    img
+        grid-column-start: 2
+    p
+        grid-column-start: 1    
+
+#sponsors
+    text-align: center
+

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import AOS from 'aos';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,10 @@ import { Component } from '@angular/core';
   `,
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Practical Parts';
+
+  ngOnInit(): void {
+    AOS.init();
+  }
 }

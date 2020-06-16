@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ShopService } from 'src/app/services/shop.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +12,12 @@ export class HomeComponent implements OnInit {
   email: string;
   domain: string;
 
-  constructor(private shopService: ShopService) {}
+  constructor(private shopService: ShopService, public router: Router) {}
 
   ngOnInit() {
     this.testRequest();
   }
+
 
   testRequest(): void {
     this.shopService.getShop().subscribe(
