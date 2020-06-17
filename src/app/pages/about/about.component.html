@@ -15,10 +15,10 @@
                 are pursuing degrees in mechanical engineering at North Dakota State University.
             </p>
         </section>
-        <section class="about-adam">
-            <h2 data-aos="fade" data-aos-once="true" data-aos-offset="400">Adam Fowler</h2>
-            <img data-aos="fade" data-aos-once="true"  data-aos-offset="400" data-aos-delay="300" data-aos-transition="3000" id="adam-img" src="../../../assets/img/adam.png">
-            <p data-aos="fade-right" data-aos-once="true"  data-aos-offset="400" data-aos-delay="200" data-aos-transition="3000">
+        <section class="about-adam grid">
+            <h2 data-aos="fade" data-aos-once="true" data-aos-offset="300">Adam Fowler</h2>
+            <img data-aos="fade" data-aos-once="true"  data-aos-offset="300" data-aos-delay="300" data-aos-transition="3000" id="adam-img" src="../../../assets/img/adam.png">
+            <p data-aos="fade-right" data-aos-once="true"  data-aos-offset="300" data-aos-delay="200" data-aos-transition="3000">
                 After graduating from Prior Lake High School, Adam went to work at Maverick Drone Systems where he managed
                 UAV service operations. Prior to founding Practical Parts, Adam founded Notely Apps which produced the app
                 <a href="https://play.google.com/store/apps/details?id=com.notely.trumpetfingerings&hl=en_US" target="_blank">"Trumpet Fingerings"</a>
@@ -27,10 +27,10 @@
                 Chairman of the Board.
             </p>
         </section>
-        <section class="about-liam">
-            <h2 data-aos="fade" data-aos-once="true"  data-aos-offset="400">Liam Straub</h2>
-            <img data-aos="fade" data-aos-once="true"  data-aos-offset="400" data-aos-delay="300" data-aos-transition="3000" id="liam-img" src="../../../assets/img/liam.jpg">
-            <p data-aos="fade-left" data-aos-once="true" data-aos-offset="400" data-aos-delay="200" data-aos-transition="3000">
+        <section class="about-liam grid">
+            <h2 data-aos="fade" data-aos-once="true"  data-aos-offset="300">Liam Straub</h2>
+            <img data-aos="fade" data-aos-once="true"  data-aos-offset="300" data-aos-delay="300" data-aos-transition="3000" id="liam-img" src="../../../assets/img/liam.jpg">
+            <p data-aos="fade-left" data-aos-once="true" data-aos-offset="300" data-aos-delay="200" data-aos-transition="3000">
                 Liam Straub started off his FRC career on team 4239 Willmar WARPSPEED his freshman year of high school. This was
                 a fairly small and low funded team that faced many challenges throughout the season. Liam worked hard to produce
                 the best quality robot he could for the 2014 FRC season. Upon the completion of his freshman year, Liam moved and
@@ -43,7 +43,16 @@
         </section>
         <section id="sponsors">
             <h2>Sponsors</h2>
-            <img id="edina-img" src="../../../assets/img/edina_reality.jpg">
+            <div class="grid">
+                <ng-container *ngFor="let sponsor of sponsors">
+                    <a href="{{sponsor.url}}" target="_blank">
+                        <img id="fileName" src="{{baseUrl + sponsor.fileName}}">
+                    </a>
+                </ng-container>
+                <p class="text-larger">
+                    Want to sponsor Practical Parts? <a routerLink="/contact">Contact Us!</a>
+                </p>
+            </div>
         </section>
     </div>
 </div>
