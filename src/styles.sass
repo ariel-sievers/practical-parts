@@ -41,24 +41,41 @@ a
     text-decoration: underline
 
 .container
-    padding-right: 15rem
-    padding-left: 15rem
-    margin-right: auto
-    margin-left: auto
+  padding-right: 15rem
+  padding-left: 15rem
+  margin-right: auto
+  margin-left: auto
+
+.grid
+  display: grid
+
+.text-center
+  text-align: center
 
 @media (max-width: $small)
   .container
-    max-width: 100%
+    padding-right: 2rem
+    padding-left: 2rem
 
-@media (max-width: $medium)
+@media (min-width: $small)
+  .container
+    max-width: 100%
+    padding-right: 4rem
+    padding-left: 4rem
+
+
+@media (min-width: $medium)
   .container
     max-width: 540px
+    padding-right: 8rem
+    padding-left: 8rem
 
-@media (max-width: $large)
+
+@media (min-width: $large)
   .container
     max-width: 960px
 
-@media (max-width: $extra-large)
+@media (min-width: $extra-large)
   .container
     max-width: 1140px
 
