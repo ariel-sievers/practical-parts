@@ -1,1 +1,28 @@
-<p>contact works!</p>
+<div *ngIf="contactInfo" class="container">
+    <h1>Contact Us</h1>
+    <table>
+        <thead>
+            <tr>
+                <th colspan="2">Sales, Support, and General Inquiries:</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Email:
+                </td>
+                <td>
+                    {{ contactInfo[0] }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Phone:
+                </td>
+                <td>
+                    {{ contactInfo[1] }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

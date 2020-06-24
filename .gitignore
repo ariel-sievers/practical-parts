@@ -48,7 +48,5 @@ Thumbs.db
 # Environment Variables
 /src/environments/environment.ts
 
-
-
 # Local Netlify folder
 .netlify
