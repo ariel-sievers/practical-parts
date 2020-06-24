@@ -6,16 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.sass']
 })
 export class NavbarComponent implements OnInit {
-
   show = false;
-  
-  showMenu() {
-    this.show = !this.show;
-  }
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  showMenu() {
+    this.show = !this.show;
+  }
+
+  hideMenu() {
+    this.show = false;
   }
 
 }
