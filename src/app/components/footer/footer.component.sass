@@ -1,12 +1,66 @@
-body
-    background-color: white
+@import '../../../assets/variables'
+
+div:first-child
+    background-color: white 
+
+ul
+    margin: 0
+    display: block
+
+li
+    list-style: none
+    display: inline
+    margin-right: 1rem
 
 .grid
     grid-template-columns: 1fr 1fr
     padding: 5rem
+        bottom: 1rem
     font-size: 0.9rem
-    div
+    color: dimgrey
+    div:child-last
         align-self: end
 
-#payment-methods
+.icon
+    font:
+        family: $icon
+        size: 30px
+    line-height: 30px
+    display: inline-block
+    margin-top: 0.5rem
+
+.icon:before
+    display: inline
+
+.icon-american_express:before
+    content: "\41"
+
+.icon-apple_pay:before
+    content: "\e90b"
+
+.icon-diners_club:before
+    content: "\63"
+
+.icon-discover:before
+    content: "\44"
+
+.icon-google_pay:before
+    content: "\e911"
+
+.icon-jcb:before
+    content: "\4a"
+
+.icon-mastercard:before
+    content: "\4d"
+
+.icon-paypal:before
+    content: "\50"
+
+.icon-shopify_pay:before
+    content: "\e910"
+
+.icon-visa:before
+    content: "\56"
+
+#payment-methods:before
     justify-self: end
