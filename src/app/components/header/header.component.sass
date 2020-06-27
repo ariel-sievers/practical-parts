@@ -1,81 +1,33 @@
 @import '../../../assets/variables'
 
-*
-  box-sizing: border-box
-
-div
-  display: flex
-
 img
-  display: block
-  height: 8em
+  height: 8rem
 
-#section-header
-  min-width: 769px
-  background-color: white
-
-#account-options
-  flex: 2
-  float: right
-  font-size: 1em
-  color: $color-main
-
-.site-header
-  width: 100%
-
-.wrapper
-  margin: auto
-  height: 75%
-  width: 90%
-  display: flex
-  justify-content: center
-
-.header-container
-  display: flex
-  width: 100%
-  margin-bottom: 15px
-
-.item
-  display: flex
-  flex-direction: column
-  justify-content: center
+.grid
+  grid-template-columns: 30% 1fr
+  column-gap: 5rem
+  padding: 2.25rem
+  justify-content: end
   
-.left-half
-  flex: 1
-  padding: 1rem
-    left: 15%
-    bottom: 3rem
-  align-self: flex-start
-
-.right-half
-  flex: 1
-  padding: 1rem
-    right: 10%
-  text-align: right
-  align-self: flex-end
-
-.box
-  display: flex
-  flex-direction: row
-  justify-content: flex-end
-
-app-search-bar
-  flex: none
+.grid-small
+  padding: 0
+  column-gap: 0
+  grid-template-columns: minmax(0, 60%) 10rem
+  justify-self: end
+  justify-items: end
 
 .cart-btn
-  flex: none
   width: 100px
   height: 40px
   background-color: $color-background
   font:
     family: $text-regular
-    size: 1.25em
+    size: 1.25rem
   color: $color-dark-accent
   outline: 0
   border: none
     radius: 5px
   padding: 0.5rem
-  margin-left: 50px
 
 .cart-btn:hover
   background-color: #cdd3e5
@@ -85,13 +37,31 @@ app-search-bar
   font-size: 27px
   color: $color-dark-accent
 
+#account-options
+  align-self: end
+
+
+@media (max-width: $large)
+  .container
+    padding-left: 5rem
+    padding-right: 5rem
+  .grid
+    padding-left: 0
+    padding-right: 0
+    justify-content: center
+    grid-template-columns: 50% 50%
+    column-gap: 5rem
+  .grid-small
+    column-gap: 0
+    grid-template-columns: minmax(0, 60%) 10rem
 
 @media (max-width: $medium)
-  .container
-    flex-wrap: wrap
-  .item:first-child
-    flex-basis: 100%
-  .right-half
+  .grid
+    grid-template-columns: 100%
+    grid-template-rows: 100%
+    justify-items: center
+  .grid-small, #account-options
     display: none
-  .cart-btn
-    display: none
+  
+
+

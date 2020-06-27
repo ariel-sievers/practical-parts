@@ -21,6 +21,7 @@
                 </td>
                 <td>
                     {{ contactInfo[1] }}
+                    <ng-container *ngIf="hoursAvailable">{{ hoursAvailable }}</ng-container>
                 </td>
             </tr>
         </tbody>

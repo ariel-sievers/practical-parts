@@ -1,26 +1,24 @@
-<div id="section-header">
-    <div class="site-header" role="banner">
-        <div class="wrapper">
-            <div class="header-container">
-                <!-- logo header -->
-                <div class="item left-half">
-                  <a routerLink="/">
-                    <img src="assets/img/logo.png">
-                  </a>
-                </div>
-                <div class="item right-half">
-                    <p id="account-options"><a>Sign in</a> or <a>Create an Account</a></p>
-                    <div class="box">
-                        <app-search-bar></app-search-bar>
-                        <button class="cart-btn">
-                            <i class="fa fa-shopping-cart"></i>
-                            Cart
-                        </button>
-                    </div>
-                </div>
+<div style="background-color:white">
+    <div class="container">
+        <div id="header" class="grid" role="banner">
+            <div>
+                <a routerLink="/">
+                <img src="assets/img/logo.png">
+                </a>
+            </div>
+            <div class="text-right">
+                <p id="account-options"><a>Sign in</a> or <a>Create an Account</a></p>
+                <div class="grid grid-small">
+                    <app-search-bar></app-search-bar>
+                    <button class="cart-btn">
+                        <i class="fa fa-shopping-cart"></i>
+                        Cart
+                    </button>
+                </div> 
             </div>
         </div>
     </div>
 </div>
+
 <app-navbar></app-navbar>
 
