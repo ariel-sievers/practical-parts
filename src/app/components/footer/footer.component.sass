@@ -62,5 +62,34 @@ li
 .icon-visa:before
     content: "\56"
 
+#copyright
+    white-space: nowrap
+
 #payment-methods:before
     justify-self: end
+
+@media (max-width: $large)
+    *
+        box-sizing: border-box
+    .container
+        padding-left: 5rem
+        padding-right: 5rem
+        margin-left: 0
+        margin-right: 0
+        min-width: 100%
+    .grid
+        grid-template-columns: auto minmax(0, 80%)
+        justify-content: space-evenly
+
+@media (max-width: $medium)
+    .container
+        padding-left: 2rem
+        padding-right: 2rem
+    .grid
+        grid-template-columns: 100%
+        grid-template-rows: repeat(2, auto)
+        justify-items: center
+    .text-right
+        text-align: center
+        padding-left: 0
+
