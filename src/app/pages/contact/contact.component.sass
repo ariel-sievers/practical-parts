@@ -1,18 +1,24 @@
+@import '../../../assets/variables'
+    
 th, td
     text-align: left
     vertical-align: middle
     padding: 10px
         left: 0
 
-tr:nth-last-child(2)
-    td
-        padding-bottom: 0
+tr:first-child td
+    border-bottom: 1px solid darkgrey
 
-tr:last-child
-    td
-        padding: 0
+tr:nth-last-child(2) td
+    padding-bottom: 0
 
+tr:last-child td
+    padding: 0
 
 table
     margin-left: 2rem
     padding-bottom: 5rem
+    border-collapse: collapse
+
+.icon-contact
+    color: $color-main
