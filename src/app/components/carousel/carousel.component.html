@@ -1,10 +1,13 @@
 <div class="wrapper">
-    <div class="slides">
+    <div class="slides" routerLink="{{currentLink}}" [ngClass]="{'imageLink': currentLink}">
         <img src="{{slides[slides.length-1].src}}" class="slide" id="lastClone">
         <ng-container *ngFor="let slide of slides; let i = index">
             <img src="{{slide.src}}" class="slide">
         </ng-container>
         <img src="{{slides[0].src}}" class="slide" id="firstClone">
+    </div>
+    <div *ngIf="currentDescription" class="description-container" [ngClass]="{'imageLink': currentLink}">
+        <h2>{{ currentDescription }}</h2>
     </div>
     <div class="controls">
         <button class="prev" (click)="onPrev()">
@@ -12,4 +15,10 @@
         <button class="next" (click)="onNext()">
         </button>
     </div> 
+</div>
+<div class="slide-number-container">
+    <span *ngFor="let slide of slides; let i = index"
+          class="slide-number"
+          [ngClass]="{'active': (i + 1)===currentSlide}"
+          (click)="goToSlide(i + 1)"></span>
 </div>

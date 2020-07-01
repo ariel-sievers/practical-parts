@@ -33,3 +33,19 @@ $color-dark-accent: #003366
 $color-dark-accent-lightest: #4d5a97
 $color-dark-accent-lighter: #3d4776
 $color-dark-accent-darker: #00284d
+
+// mix-ins
+
+@mixin box-shadow($params)
+  box-shadow: $params
+
+// other
+
+$shadow1: 0 1px 2px rgba(0,0,0,0.07)
+$shadow2: 0 2px 4px rgba(0,0,0,0.07)
+$shadow3: 0 4px 8px rgba(0,0,0,0.07)
+$shadow4: 0 8px 16px rgba(0,0,0,0.07)
+$shadow5: 0 16px 32px rgba(0,0,0,0.07)
+$shadow6: 0 32px 64px rgba(0,0,0,0.07)
+
+$shadows: $shadow1, $shadow2, $shadow3, $shadow4, $shadow5, $shadow6
