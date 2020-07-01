@@ -13,6 +13,7 @@ import { NavbarComponent } from './components/header/navbar/navbar.component';
 import { SearchBarComponent } from './components/header/search-bar/search-bar.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     NavbarComponent,
     SearchBarComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    CarouselComponent,
   ],
   imports: [
     BrowserModule,

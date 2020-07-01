@@ -1,0 +1,15 @@
+<div class="wrapper">
+    <div class="slides">
+        <img src="{{slides[slides.length-1].src}}" class="slide" id="lastClone">
+        <ng-container *ngFor="let slide of slides; let i = index">
+            <img src="{{slide.src}}" class="slide">
+        </ng-container>
+        <img src="{{slides[0].src}}" class="slide" id="firstClone">
+    </div>
+    <div class="controls">
+        <button class="prev" (click)="onPrev()">
+        </button>
+        <button class="next" (click)="onNext()">
+        </button>
+    </div> 
+</div>
