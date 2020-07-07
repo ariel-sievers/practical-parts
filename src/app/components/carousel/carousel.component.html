@@ -17,8 +17,14 @@
     </div> 
 </div>
 <div class="slide-number-container">
+    <span class="controls controls-small">
+        <button class="prev" (click)="onPrev()"></button>
+    </span>
     <span *ngFor="let slide of slides; let i = index"
           class="slide-number"
           [ngClass]="{'active': (i + 1)===currentSlide}"
           (click)="goToSlide(i + 1)"></span>
+    <span class="controls controls-small">
+        <button class="next" (click)="onNext()"></button>
+    </span>
 </div>

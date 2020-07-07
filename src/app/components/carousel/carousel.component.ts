@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, HostListener} from '@angular/core';
 
 export interface Slide {
   src: string;
@@ -31,7 +31,7 @@ export class CarouselComponent implements OnInit, AfterViewInit {
     this.currentSlide       = 1;
     this.currentDescription = this.getSlideDescription(this.currentSlide);
     this.currentLink        = this.getSlideLink(this.currentSlide);
-    this.slideshowTimer     = setInterval( () => { this.onNext(); }, 7000);
+    //this.slideshowTimer     = setInterval( () => { this.onNext(); }, 7000);
   }
 
   ngAfterViewInit(): void {
@@ -50,6 +50,13 @@ export class CarouselComponent implements OnInit, AfterViewInit {
         this.resetToStart();
       }
     })
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    console.log(this.carouselSlides[0].clientWidth)
+    this.imageWidth = this.carouselSlides[0].clientWidth;
+    this.goToSlide(1);
   }
 
   /**
