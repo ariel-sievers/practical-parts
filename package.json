@@ -8,7 +8,9 @@
     "build": "npm run config -- --environment=prod && ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "scully": "scully",
+    "scully:serve": "scully serve"
   },
   "private": true,
   "dependencies": {
@@ -21,6 +23,9 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "@fortawesome/angular-fontawesome": "^0.6.0",
+    "@scullyio/init": "0.0.28",
+    "@scullyio/ng-lib-v8": "latest",
+    "@scullyio/scully": "latest",
     "aos": "^2.3.4",
     "cors-anywhere": "^0.4.3",
     "jquery": "^3.5.1",

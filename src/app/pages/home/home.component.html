@@ -1,8 +1,40 @@
 <div [hidden]="router.url !== '/'">
     <!-- any home page content should go here -->
+    <div class="container welcome">
+        <h1 class="text-center">Welcome to Practical Parts</h1>
+        <h2 class="text-center">
+            Providing easy and unique (cost effective)
+            <br>products for <span>all levels of FRC teams.</span>
+        </h2>
+    </div>
     <app-carousel [slides]="slides"></app-carousel>
-    <div class="container">
-
+    <div class="container extra-info">
+        <div class="container-small">
+            <section id="who">
+                <h1 class="text-light-italic">Who We Are</h1>
+                <p>
+                    Practical Parts is dedicated to making robotics parts and tools
+                    for high school robotics teams. Our goal is to ensure you get the
+                    quality products you should expect with a price you can afford.
+                    <i>For more information about us, <a routerLink='/about'>click here</a>.</i>
+                </p>
+            </section>
+            <section id="new">
+                <h1 class="text-light-italic">What's New</h1>
+                <p>
+                    We are always working on new products daily. Look here for update information
+                    on any new products we may have.
+                </p>
+                <div *ngIf="newProducts" class="grid">
+                    <ng-container *ngFor="let product of newProducts">
+                        <h1>{{ product.title }}</h1>
+<!--                         <div *ngIf="product.images[0]">
+                            <img class="product-img" src="{{product.images[0].src}}">
+                        </div> -->
+                    </ng-container>
+                </div>
+            </section>
+        </div>
     </div>
 </div>
     

@@ -14,6 +14,8 @@ import { SearchBarComponent } from './components/header/search-bar/search-bar.co
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { ScullyLibModule } from '@scullyio/ng-lib-v8';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ScullyLibModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

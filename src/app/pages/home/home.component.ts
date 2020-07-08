@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ShopService } from 'src/app/services/shop.service';
 import { Slide } from 'src/app/components/carousel/carousel.component';
 import { SlideshowService } from 'src/app/services/slideshow.service';
+import { ProductsService, Product } from 'src/app/services/products.service';
 
 @Component({
   selector: 'app-home',
@@ -10,13 +11,16 @@ import { SlideshowService } from 'src/app/services/slideshow.service';
   styleUrls: ['./home.component.sass']
 })
 export class HomeComponent implements OnInit {
-  slides: Slide[];
+  slides:      Slide[];
+  newProducts: Product[];
 
-  constructor(public shopService: ShopService, public slideshowService: SlideshowService, public router: Router) {}
+  constructor(public shopService: ShopService, public productsService: ProductsService,
+    public slideshowService: SlideshowService, public router: Router) {}
 
   ngOnInit() {
-    this.loadCache();
     this.slides = this.getSlideshow();
+    this.loadCache();
+    this.newProducts = this.getNewProducts();
   }
 
   private loadCache() {
@@ -29,6 +33,36 @@ export class HomeComponent implements OnInit {
    */
   getSlideshow(): Slide[] {
     return this.slideshowService.getSlides();
+  }
+
+  /**
+   * Get a list of products that were created less than or equal to 6 months ago.
+   * Products will not show if they are not currently published on the site.
+   */
+  getNewProducts(): Product[] {
+    if (this.newProducts) { return; }
+
+    const today                      = new Date();
+    const todayUTC                   = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+
+    const desiredProducts: Product[] = []
+    
+    this.productsService.getProducts().subscribe( data => {
+      for (const product of data) {
+        const createdAt    = new Date(product.createdAt);
+        const createdAtUTC = Date.UTC(createdAt.getFullYear(), createdAt.getMonth(), createdAt.getDate());
+  
+        // product with id 451235673709 should not be shown since it is not a real product
+        // sold by Practical Parts
+        if (this.productsService.getDifferenceInMonths(createdAtUTC, todayUTC) <= 12
+          && product.publishedAt !== null &&product.id !== 4516235673709) {
+
+          desiredProducts.push(product);
+        }
+      }
+    });
+    
+    return desiredProducts;
   }
 
 }
