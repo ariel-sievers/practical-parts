@@ -20,8 +20,10 @@ const httpOptions = {
   })
 };
 
-const version = environment.API_VERSION;
-const shop    = 'practical-parts';
+const version            = environment.API_VERSION;
+const shop               = 'practical-parts';
+const contactInfoFields  = 'customer_email,phone,shop_owner';
+const addressFields      = 'address1,address2,city,province,zip,country';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +50,7 @@ export class ShopService {
    */
   getShopContactInfo(): Observable<string[]> {
     if (!this.contactInfo) {
-      this.contactInfo = this.http.get(this.url,
+      this.contactInfo = this.http.get(this.url + `?fields=${contactInfoFields}`,
         httpOptions).pipe(
           map( data => {
             const email = data['shop']['customer_email']
@@ -70,7 +72,7 @@ export class ShopService {
    */
   getShopAddress(): Observable<Address> {
     if (!this.address) {
-      this.address = this.http.get(this.url,
+      this.address = this.http.get(this.url + `?fields=${addressFields}`,
         httpOptions).pipe(
           map( data => {
             const address1  = data['shop']['address1'];

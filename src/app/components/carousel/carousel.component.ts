@@ -31,7 +31,7 @@ export class CarouselComponent implements OnInit, AfterViewInit {
     this.currentSlide       = 1;
     this.currentDescription = this.getSlideDescription(this.currentSlide);
     this.currentLink        = this.getSlideLink(this.currentSlide);
-    //this.slideshowTimer     = setInterval( () => { this.onNext(); }, 7000);
+    this.slideshowTimer     = setInterval( () => { this.onNext(); }, 7000);
   }
 
   ngAfterViewInit(): void {
@@ -54,7 +54,6 @@ export class CarouselComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    console.log(this.carouselSlides[0].clientWidth)
     this.imageWidth = this.carouselSlides[0].clientWidth;
     this.goToSlide(1);
   }
@@ -71,8 +70,6 @@ export class CarouselComponent implements OnInit, AfterViewInit {
     // shorten description if its length is greater than 44 characters
     if (description && description.length > 44) { description = description.substr(0, 44); }
 
-    console.log("DESCRIPTION FOUND: " + (description ? description : "none"));
-
     return description ? description : "";
   }
 
@@ -84,7 +81,6 @@ export class CarouselComponent implements OnInit, AfterViewInit {
     if (slideIndex <= 0 || slideIndex > this.slides.length) { return; }
 
     const link = this.slides[slideIndex - 1].link
-    console.log("LINK FOUND: " + (link ? link : "none"));
 
     return link ? link : ""
   }

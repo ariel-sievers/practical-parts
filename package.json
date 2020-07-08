@@ -24,6 +24,7 @@
     "aos": "^2.3.4",
     "cors-anywhere": "^0.4.3",
     "jquery": "^3.5.1",
+    "normalize.css": "^8.0.1",
     "rxjs": "~6.4.0",
     "shopify-buy": "^2.9.0",
     "tslib": "^1.10.0",

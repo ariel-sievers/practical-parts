@@ -75,8 +75,8 @@ export class ContactComponent implements OnInit {
   getContactInformation(): void {
     this.shopService.getShopContactInfo().subscribe(
       data => {
-        this.contactInfo = data,
-        console.log(this.contactInfo) },
+        this.contactInfo = data
+      },
       err => console.log(err),
       () => console.log('done loading shop information')
     )
