@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
   slides:      Slide[];
   newProducts: Product[];
 
+  cardBody:  HTMLCollectionOf<Element>;
+
   constructor(public shopService: ShopService, public productsService: ProductsService,
     public slideshowService: SlideshowService, public router: Router) {}
 
@@ -55,13 +57,15 @@ export class HomeComponent implements OnInit {
         // product with id 451235673709 should not be shown since it is not a real product
         // sold by Practical Parts
         if (this.productsService.getDifferenceInMonths(createdAtUTC, todayUTC) <= 12
-          && product.publishedAt !== null &&product.id !== 4516235673709) {
-
+          && product.publishedAt !== null && product.id !== 4516235673709) {
+          
+          const dateNoTime  = createdAt.toString().split(" ");
+          product.createdAt =  `${dateNoTime[0]} ${dateNoTime[1]} ${dateNoTime[2]} ${dateNoTime[3]}`;
           desiredProducts.push(product);
         }
       }
     });
-    
+
     return desiredProducts;
   }
 

@@ -9,3 +9,18 @@
 
 section
     text-align: justify
+    &#new .grid
+        margin: 0 auto
+        grid-template-columns: repeat(3, 1fr)
+        grid-template-rows: auto
+        grid-gap: 1rem
+        text-align: left
+
+@media (max-width: $small)
+    section#new .grid
+        grid-template-columns: 1fr !important
+
+@media (max-width: $medium)
+    section#new .grid
+        grid-template-columns: 1fr 1fr
+

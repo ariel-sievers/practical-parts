@@ -26,11 +26,24 @@
                     on any new products we may have.
                 </p>
                 <div *ngIf="newProducts" class="grid">
-                    <ng-container *ngFor="let product of newProducts">
-                        <h1>{{ product.title }}</h1>
-<!--                         <div *ngIf="product.images[0]">
-                            <img class="product-img" src="{{product.images[0].src}}">
-                        </div> -->
+                    <ng-container *ngFor="let product of newProducts.reverse()">
+                        <app-card>
+                            <app-card-header>
+                                <app-card-title>{{ product.title }}</app-card-title>
+                                <app-card-subtitle>{{ product.createdAt }}</app-card-subtitle>
+                            </app-card-header>
+                            <ng-container *ngIf="product.images[0]; else noImage">
+                                <img src="{{product.images[0].src}}" cardImage>
+                            </ng-container>
+                            <ng-template #noImage>
+                                <i class="fas fa-image fa-9x" cardImage></i>
+                                <small>This product has no image.</small>
+                            </ng-template>
+                            <app-card-body [innerHTML]="product.description">
+                                <p *ngIf="!product.description">This product has no description.</p>
+                            </app-card-body>
+                            <app-card-actions></app-card-actions>
+                        </app-card>
                     </ng-container>
                 </div>
             </section>

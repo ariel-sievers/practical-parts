@@ -15,6 +15,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { HttpClientModule } from '@angular/common/http';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { ScullyLibModule } from '@scullyio/ng-lib-v8';
+import { CardModule } from './modules/card/card.module';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { ScullyLibModule } from '@scullyio/ng-lib-v8';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    CardModule,
     ScullyLibModule,
   ],
   providers: [],

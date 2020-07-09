@@ -1,0 +1,21 @@
+@import '../../../assets/variables'
+
+div
+    display: flex
+    flex-direction: column
+    background-color: white
+    min-height: 100% 
+    border-radius: 4px
+    @include box-shadow($card-shadows)
+    position: relative
+    &::ng-deep
+        img
+            width: 100%
+        i, small
+            text-align: center
+            color: dimgrey
+            background-color: $color-background
+        small
+            padding-bottom: 10px
+        
+    
