@@ -29,7 +29,8 @@ export class CardBodyComponent implements OnInit {
       // change li list-style
       this.el.nativeElement.querySelectorAll('li').forEach(listItem => {
         this.renderer.setStyle(listItem, 'list-style-type', 'none');
-        listItem.innerHTML = '&#9734; ' + listItem.innerHTML;
+        listItem.innerHTML = '⚙️&nbsp;&nbsp;&nbsp;' + listItem.innerHTML;
+        this.renderer.setStyle(listItem, 'text-indent', '-2.2rem')
       });
 
     }

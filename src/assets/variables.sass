@@ -39,8 +39,50 @@ $color-dark-accent-darker: #00284d
 @mixin box-shadow($params)
   box-shadow: $params
 
+@mixin button($type)
+  outline: none
+  border: none
+    radius: 4px
+  font: $text-regular
+  color: $color-main
+  padding: 1rem
+  margin-top: 0.5rem
+  margin-bottom: 0.5rem
+  cursor: pointer
+  @if $type == regular
+    background-color: $color-background
+    &:hover
+      filter: brightness(85%)
+  @else if $type == main
+    background-color: $color-main
+    color: $color-light-accent
+    &:hover
+      background-color: $color-main-lighter
+  @else if $type == dark-accent
+    background-color: $color-dark-accent
+    color: $color-light-accent
+    &:hover
+      background-color: $color-dark-accent-lighter
+  @else if $type == light-accent
+    background-color: $color-light-accent
+    &:hover
+      background-color: $color-light-accent-darker
+  @else if $type == danger
+    background-color: #b81a1a
+    color: white
+    &:hover
+      filter: brightness(115%)
+  @else if $type == success
+    background-color: #24924e
+    color: white
+    &:hover
+      filter: brightness(115%)
+  @else 
+    @error "Type #{$type} is not known. Allowed types include regular, main, dark-accent, light-accent, danger, or success."
+
 // other
 
+// other -- shadows
 $soft-shadow1: 0 1px 2px rgba(0,0,0,0.07)
 $soft-shadow2: 0 2px 4px rgba(0,0,0,0.07)
 $soft-shadow3: 0 4px 8px rgba(0,0,0,0.07)
@@ -53,3 +95,4 @@ $card-shadow3: 0 1.6px 3.2px rgba(0,0,0,0.07)
 $card-shadow4: 0 3.2px 6.4px rgba(0,0,0,0.07)
 
 $card-shadows: $card-shadow1, $card-shadow2, $card-shadow3, $card-shadow4
+

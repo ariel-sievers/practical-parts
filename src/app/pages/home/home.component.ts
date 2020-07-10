@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ShopService } from 'src/app/services/shop.service';
 import { Slide } from 'src/app/components/carousel/carousel.component';
@@ -14,15 +14,32 @@ export class HomeComponent implements OnInit {
   slides:      Slide[];
   newProducts: Product[];
 
-  cardBody:  HTMLCollectionOf<Element>;
-
   constructor(public shopService: ShopService, public productsService: ProductsService,
-    public slideshowService: SlideshowService, public router: Router) {}
+    public slideshowService: SlideshowService, public router: Router, private renderer: Renderer2, private el: ElementRef) {}
 
   ngOnInit() {
     this.slides = this.getSlideshow();
     this.loadCache();
     this.newProducts = this.getNewProducts();
+
+    // keep card from getting too long due to product description
+    this.el.nativeElement.querySelectorAll('app-card-body').forEach(cardBody => {
+      this.renderer.appendChild(cardBody, this.renderer.createElement('div'));
+
+      const divs = cardBody.querySelectorAll('div');
+
+      this.renderer.setStyle(divs[0], 'height', '200px');
+      this.renderer.setStyle(divs[0], 'margin-bottom', '1rem');
+      this.renderer.addClass(divs[1], 'fade');
+    })
+
+    this.el.nativeElement.querySelectorAll('app-card-actions').forEach(cardActions => {
+      const div = cardActions.querySelector('div');
+
+      this.renderer.setStyle(div, 'position', 'absolute');
+      this.renderer.setStyle(div, 'bottom', '-4px');
+    })
+
   }
 
   private loadCache() {
@@ -56,7 +73,7 @@ export class HomeComponent implements OnInit {
   
         // product with id 451235673709 should not be shown since it is not a real product
         // sold by Practical Parts
-        if (this.productsService.getDifferenceInMonths(createdAtUTC, todayUTC) <= 12
+        if (this.productsService.getDifferenceInMonths(createdAtUTC, todayUTC) <= 6
           && product.publishedAt !== null && product.id !== 4516235673709) {
           
           const dateNoTime  = createdAt.toString().split(" ");

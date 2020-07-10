@@ -46,6 +46,24 @@ a
   text-decoration: none
   &:hover
     text-decoration: underline
+  
+.btn-regular
+  @include button(regular)
+
+.btn-main
+  @include button(main)
+
+.btn-dark-accent
+  @include button(dark-accent)
+
+.btn-light-accent
+  @include button(light-accent)
+
+.btn-danger
+  @include button(danger)
+
+.btn-success
+  @include button(success)
 
 .background
   background-color: $color-background

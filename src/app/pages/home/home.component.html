@@ -42,10 +42,76 @@
                             <app-card-body [innerHTML]="product.description">
                                 <p *ngIf="!product.description">This product has no description.</p>
                             </app-card-body>
-                            <app-card-actions></app-card-actions>
+                            <app-card-actions>
+                                <a>More Information</a>
+                            </app-card-actions>
                         </app-card>
                     </ng-container>
                 </div>
+
+                <!-- FOR TESTING OFF WIFI ONLY -- COMMENT OUT OTHERWISE -->
+                <div class="grid">
+                    <app-card class="new-product-card">
+                        <app-card-header>
+                            <app-card-header>
+                                <app-card-title>Generic Card (no image/description)</app-card-title>
+                                <app-card-subtitle>WED Jul 7 2019</app-card-subtitle>
+                            </app-card-header>
+                        </app-card-header>
+                        <i class="fas fa-image fa-9x" cardImage></i>
+                        <small>This product has no image.</small>
+                        <app-card-body>
+                            <p>This product has no description.</p>
+                        </app-card-body>
+                        <app-card-actions>
+                            <a>More Information</a>
+                        </app-card-actions>
+                    </app-card>
+                    <app-card class="new-product-card">
+                        <app-card-header>
+                            <app-card-header>
+                                <app-card-title>Product 1</app-card-title>
+                                <app-card-subtitle>WED Jul 7 2019</app-card-subtitle>
+                            </app-card-header>
+                        </app-card-header>
+                        <img src="../../../assets/img/adam.png" cardImage>
+                        <app-card-body>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, dolore. Adipisci sint tenetur ut quo vero nostrum suscipit perferendis autem. Sed recusandae iure voluptatem corporis et in deserunt facere perferendis!
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nam eaque, quos pariatur culpa nemo nesciunt atque optio eveniet quidem numquam sint, aliquid esse necessitatibus. Iste asperiores quaerat iure quasi?
+                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur est id ipsa, sint illum, vel natus eaque nesciunt quae aliquam iste earum ex nemo cum consequuntur? Voluptas recusandae quo in.
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi minus praesentium quis tempore voluptatum. Neque atque nihil similique mollitia, veniam accusantium, voluptates in culpa sit omnis doloremque exercitationem cumque placeat.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur aperiam laborum soluta dolorem omnis eum necessitatibus qui totam. Qui dolores porro aperiam dolorem accusamus quo, quasi ex? In, totam at.
+                            </p>
+                        </app-card-body>
+                        <app-card-actions>
+                            <a>More Information</a>
+                        </app-card-actions>
+                    </app-card>
+                    <app-card class="new-product-card">
+                        <app-card-header>
+                            <app-card-header>
+                                <app-card-title>Product 2</app-card-title>
+                                <app-card-subtitle>THU AUG 13 2019</app-card-subtitle>
+                            </app-card-header>
+                        </app-card-header>
+                        <img src="../../../assets/img/liam.png" cardImage>
+                        <app-card-body>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim at dolor error quas autem maxime, sed voluptate est quo alias! Temporibus, praesentium sint. Culpa, voluptatem saepe nulla autem sequi repudiandae!
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis laborum cum repudiandae odio corporis perspiciatis eos quas error minus iusto? Libero modi sit ipsam odio quaerat ea quam, impedit commodi.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio magnam, minus doloribus eius saepe dicta fugit rerum, exercitationem nihil inventore nam facilis incidunt, vero quibusdam omnis cum sunt perspiciatis natus.
+                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis odit in quae quaerat? Aut odit dolorum maxime iure! Culpa error cupiditate officiis nobis vel molestias tempora vero adipisci cumque voluptate!
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur aperiam laborum soluta dolorem omnis eum necessitatibus qui totam. Qui dolores porro aperiam dolorem accusamus quo, quasi ex? In, totam at.
+                            </p>
+                        </app-card-body>
+                        <app-card-actions>
+                            <a>More Information</a>
+                        </app-card-actions>
+                    </app-card>
+                </div>
+                <!-- END TESTING -->
+
             </section>
         </div>
     </div>
