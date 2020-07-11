@@ -36,8 +36,7 @@
                                 <img src="{{product.images[0].src}}" cardImage>
                             </ng-container>
                             <ng-template #noImage>
-                                <i class="fas fa-image fa-9x" cardImage></i>
-                                <small>This product has no image.</small>
+                                <app-generic-image cardImage></app-generic-image>
                             </ng-template>
                             <app-card-body [innerHTML]="product.description">
                                 <p *ngIf="!product.description">This product has no description.</p>
@@ -51,15 +50,14 @@
 
                 <!-- FOR TESTING OFF WIFI ONLY -- COMMENT OUT OTHERWISE -->
                 <div class="grid">
-                    <app-card class="new-product-card">
+                    <app-card>
                         <app-card-header>
                             <app-card-header>
                                 <app-card-title>Generic Card (no image/description)</app-card-title>
                                 <app-card-subtitle>WED Jul 7 2019</app-card-subtitle>
                             </app-card-header>
                         </app-card-header>
-                        <i class="fas fa-image fa-9x" cardImage></i>
-                        <small>This product has no image.</small>
+                            <app-generic-image cardImage>This product has no image.</app-generic-image>
                         <app-card-body>
                             <p>This product has no description.</p>
                         </app-card-body>
@@ -67,7 +65,7 @@
                             <a>More Information</a>
                         </app-card-actions>
                     </app-card>
-                    <app-card class="new-product-card">
+                    <app-card>
                         <app-card-header>
                             <app-card-header>
                                 <app-card-title>Product 1</app-card-title>
@@ -88,7 +86,7 @@
                             <a>More Information</a>
                         </app-card-actions>
                     </app-card>
-                    <app-card class="new-product-card">
+                    <app-card>
                         <app-card-header>
                             <app-card-header>
                                 <app-card-title>Product 2</app-card-title>

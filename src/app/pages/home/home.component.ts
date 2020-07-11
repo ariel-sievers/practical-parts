@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
     this.loadCache();
     this.newProducts = this.getNewProducts();
 
+    console.log(this.el.nativeElement.querySelectorAll('app-card').forEach(c => c.querySelectorAll('app-generic-image').length))
+
     // keep card from getting too long due to product description
     this.el.nativeElement.querySelectorAll('app-card-body').forEach(cardBody => {
       this.renderer.appendChild(cardBody, this.renderer.createElement('div'));

@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { ScullyLibModule } from '@scullyio/ng-lib-v8';
 import { CardModule } from './modules/card/card.module';
+import { GenericImageComponent } from './components/generic-image/generic-image.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { CardModule } from './modules/card/card.module';
     SearchBarComponent,
     BreadcrumbComponent,
     CarouselComponent,
+    GenericImageComponent,
   ],
   imports: [
     BrowserModule,
