@@ -35,7 +35,7 @@ li
   margin:
     left: 10px
     right: 10px
-  height: 54.8px
+  height: 52.8px
   padding: 0 1rem
 
 .menu-btn:focus
@@ -48,7 +48,7 @@ li
     size: 1.75rem
   line-height: 0
   position: relative
-  top: -15px
+  top: -20px
   color: $color-light-accent
 
 .hamburger
@@ -61,18 +61,20 @@ li
   background-color: $color-light-accent
   margin: 4px 0
   transition: 0.4s
+  transform: translateY(-2px)
 
 .change .bar1
-  transform: rotate(-45deg) translate(-8px, 2px)
+  transform: rotate(-45deg) translate(-6px, 2px)
 
 .change .bar2
   opacity: 0
 
 .change .bar3
-  transform: rotate(45deg) translate(-8px, -2px)
+  transform: rotate(45deg) translate(-8px, -4px)
 
 .hide, .cart-btn
   display: none
+
 
 // make navbar responsive
 @media (max-width: $medium)

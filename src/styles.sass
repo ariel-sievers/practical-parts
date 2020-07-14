@@ -49,6 +49,14 @@ a
 
 button
   font-family: $text-regular !important
+
+
+.product li
+  list-style-type: none
+  text-indent: -2.5rem
+  &::before
+    content: '⚙️    '
+    white-space: pre
   
 .btn-regular
   @include button(regular)

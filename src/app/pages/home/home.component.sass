@@ -16,23 +16,39 @@ section
         grid-gap: 1rem
         text-align: left
 
-// also for testing (font awesome can't load without wifi)
-i
-    height: 200px
+.extra-info
+    padding-bottom: 5rem
 
-.fade
-    position: absolute
-    bottom: 0
-    left: 0
-    width: 100%
-    height: 20%
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 100%)
+app-card-body
+    height: 300px
+    overflow: hidden
+    margin-bottom: 1rem
+
+app-card-actions
+    &::before
+        content: ""
+        position: absolute
+        bottom: 0
+        left: 0
+        width: 100%
+        height: 20%
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 75%)
+    &::ng-deep div
+        position: absolute
+        bottom: -4px
 
 @media (max-width: $small)
     section#new .grid
         grid-template-columns: 1fr !important
 
-@media (max-width: $medium)
+@media (max-width: $large)
+    .container-small
+        padding: 0 !important
     section#new .grid
         grid-template-columns: 1fr 1fr
+
+@media (max-width: 1300px)
+    .container-small
+        padding-left: 5rem
+        padding-right: 5rem
 

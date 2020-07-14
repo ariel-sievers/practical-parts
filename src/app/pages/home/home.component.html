@@ -3,8 +3,8 @@
     <div class="container welcome">
         <h1 class="text-center">Welcome to Practical Parts</h1>
         <h2 class="text-center">
-            Providing easy and unique (cost effective)
-            <br>products for <span>all levels of FRC teams.</span>
+            <small>Providing easy and unique (cost-effective)
+            <br>products for <span>all levels of FRC teams.</span></small>
         </h2>
     </div>
     <app-carousel [slides]="slides"></app-carousel>
@@ -27,7 +27,7 @@
                 </p>
                 <div *ngIf="newProducts" class="grid">
                     <ng-container *ngFor="let product of newProducts.reverse()">
-                        <app-card>
+                        <app-card class="product">
                             <app-card-header>
                                 <app-card-title>{{ product.title }}</app-card-title>
                                 <app-card-subtitle>{{ product.createdAt }}</app-card-subtitle>
@@ -36,7 +36,7 @@
                                 <img src="{{product.images[0].src}}" cardImage>
                             </ng-container>
                             <ng-template #noImage>
-                                <app-generic-image cardImage></app-generic-image>
+                                <app-generic-image cardImage>This product has no image.</app-generic-image>
                             </ng-template>
                             <app-card-body [innerHTML]="product.description">
                                 <p *ngIf="!product.description">This product has no description.</p>
@@ -49,7 +49,7 @@
                 </div>
 
                 <!-- FOR TESTING OFF WIFI ONLY -- COMMENT OUT OTHERWISE -->
-                <div class="grid">
+                <!-- <div class="grid">
                     <app-card>
                         <app-card-header>
                             <app-card-header>
@@ -107,7 +107,7 @@
                             <a>More Information</a>
                         </app-card-actions>
                     </app-card>
-                </div>
+                </div> -->
                 <!-- END TESTING -->
 
             </section>
