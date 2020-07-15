@@ -6,19 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-bar.component.sass']
 })
 export class SearchBarComponent implements OnInit {
-  input = document.getElementById("search");
-  button = document.getElementById("reset-btn");
   
   isSquare = true;
   isClosed = true;
-  expand() {
-    this.isSquare = !this.isSquare;
-    this.isClosed = !this.isClosed;
-  }
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  expand() {
+    this.isSquare = !this.isSquare;
+    this.isClosed = !this.isClosed;
   }
 
 }

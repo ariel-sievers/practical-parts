@@ -1,0 +1,39 @@
+@import '../../../assets/variables'
+    
+app-search-bar::ng-deep
+    input, .square
+        display: inline-block
+        transition-duration: 0s
+        width: 100%
+        background-color: transparent
+        font-size: 1.15rem
+        color: $color-dark-accent
+        border: 3px solid $color-dark-accent
+            right: none
+        padding: 1.25rem
+    .reset-btn, .reset-btn:hover
+        background-color: transparent
+        border: 3px solid $color-dark-accent
+            left: none
+            radius: 0 4px 4px 0
+        padding: 1.25rem
+        cursor: default
+    .cancel, .cancel-btn-1::before, .magnifying-glass::before
+        background-color: $color-dark-accent
+    .magnifying-glass
+        border: 3px solid $color-dark-accent
+        top: 10px
+        left: 8px
+        &::before
+            width: 3px
+            height: 9px
+            left: 11px
+    .cancel-btn-1
+        border-color: transparent
+        &::before
+            height: 20px
+            top: -2px
+            left: 7px
+    .cancel-btn-2
+        width: 3px
+        top: 11px

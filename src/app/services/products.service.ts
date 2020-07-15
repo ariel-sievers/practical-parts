@@ -31,7 +31,7 @@ const productFields  = 'id,title,handle,body_html,images,created_at,published_at
 export class ProductsService {
   readonly url = `https://cors-anywhere.herokuapp.com/https://${shop}.myshopify.com/admin/api/${version}/products.json`;
 
-  products: Observable<Product[]>;
+  products:           Observable<Product[]>;
 
   constructor(private http: HttpClient) { }
 
@@ -42,9 +42,9 @@ export class ProductsService {
     if (!this.products) {
       this.products = this.http.get(this.url + `?fields=${productFields}`,
         httpOptions).pipe(
-          map ( data => {
+          map( data => {
             const desiredProducts: Product[] = [];
-            const products = data['products'];
+            const products                   = data['products'];
             for (const product of products) {
               const id            = product['id'];
               const title         = product['title'];
@@ -63,7 +63,35 @@ export class ProductsService {
           refCount()
       )
     }
-      return this.products;
+    return this.products;
+  }
+
+  /**
+   * Get products from a particular collection.
+   * @param collectionId the id of the collection to get products from
+   */
+  getProductsByCollection(collectionId: number): Observable<Product[]> {
+    return this.http.get(this.url + `?fields=${productFields}&collection_id=${collectionId}`,
+      httpOptions).pipe(
+        map( data => {
+          const desiredProducts: Product[] = [];
+          const products                   = data['products'];
+
+          for (const product of products) {
+            const id            = product['id'];
+            const title         = product['title'];
+            const handle        = product['handle'];
+            const description   = product['body_html'];
+            const images        = product['images'];
+            const createdAt     = product['created_at'];
+            const publishedAt   = product['published_at'];
+
+            const newProduct    = { id, title, handle, description, images, createdAt, publishedAt };
+            desiredProducts.push(newProduct);
+          }
+          return desiredProducts;
+        })
+      )
   }
 
   /**
