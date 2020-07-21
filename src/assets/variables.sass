@@ -68,15 +68,15 @@ $color-dark-accent-darker: #00284d
     &:hover
       background-color: $color-light-accent-darker
   @else if $type == danger
-    background-color: #b81a1a
+    background-color: #df2020
     color: white
     &:hover
-      filter: brightness(115%)
+      filter: brightness(90%)
   @else if $type == success
-    background-color: #24924e
+    background-color: #2eb863
     color: white
     &:hover
-      filter: brightness(115%)
+      filter: brightness(90%)
   @else 
     @error "Type #{$type} is not known. Allowed types include regular, main, dark-accent, light-accent, danger, or success."
 

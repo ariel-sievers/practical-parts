@@ -1,4 +1,5 @@
 <div [hidden]="router.url !== '/'">
+    <div *ngIf="isLoading | async">Loading data...</div>
     <!-- any home page content should go here -->
     <div class="container welcome">
         <h1 class="text-center">Welcome to Practical Parts</h1>

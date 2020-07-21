@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, HostListener} from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, HostListener, Renderer2, AfterContentChecked} from '@angular/core';
 
 export interface Slide {
   src: string;
@@ -11,7 +11,7 @@ export interface Slide {
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.sass']
 })
-export class CarouselComponent implements OnInit, AfterViewInit {
+export class CarouselComponent implements OnInit, AfterViewInit, AfterContentChecked {
 
   // slide variables
   @Input() slides:     Slide[];
@@ -26,6 +26,8 @@ export class CarouselComponent implements OnInit, AfterViewInit {
 
   // timer
   slideshowTimer:      NodeJS.Timer;
+
+  constructor(private renderer: Renderer2) {}
 
   ngOnInit(): void {
     this.currentSlide       = 1;
@@ -50,6 +52,14 @@ export class CarouselComponent implements OnInit, AfterViewInit {
         this.resetToStart();
       }
     })
+  }
+
+  ngAfterContentChecked(): void {
+    // carousel component is initially hidden from view, image width must be obtained
+    if (this.carouselSlides && this.imageWidth === 0) {
+      this.imageWidth = this.carouselSlides[0].clientWidth;
+      this.carousel.style.transform = `translateX(${ this.currentSlide * -this.imageWidth }px)`;
+    }
   }
 
   @HostListener('window:resize', ['$event'])

@@ -1,10 +1,105 @@
 @import '../../../assets/variables'
+
+.grid
+    &.outer-grid
+        grid-template-columns: 300px 1fr
+        grid-gap: 20px
+        padding: 1rem
+            left: 0
+        div:first-child
+            background-color: $color-main
+            color: $color-light-accent
+            @include box-shadow($soft-shadows)
+            padding: 1rem 0
+            border:
+                radius: 0 4px 4px 0
+            margin-top: 1rem
+            margin-bottom: 1rem
+            user-select: none
+            h1.text-light-italic
+                color: $color-light-accent
+                padding-left: 1rem
+            ul
+                padding: 0
+                text-align: center
+                button
+                    margin-top: 1.5rem
+                li
+                    display: block
+                    padding: 0.5rem 0.75rem 0.5rem 2.5rem
+                    list-style: none
+                    color: $color-light-accent
+                    font-size: 1.5rem
+                    text-align: left
+                    border-bottom: 1px solid $color-light-accent
+                    label
+                        display: block
+                        &:hover
+                            cursor: pointer
+                    &:hover
+                        background-color: $color-main-lighter
+        div:nth-child(2)
+            justify-self: stretch
+
+.expandable
+    transition: border-color 0.1s linear
+    &:hover
+        cursor: pointer
+    &::after
+        content: ""
+        width: 10px
+        height: 10px
+        border: 3px solid $color-light-accent
+            left: 0
+            top: 0
+        float: right
+        transform: rotate(-45deg) translate(-22px, calc(50% - 10px))
+        transition: transform 0.1s linear
+    &.expanded
+        border-color: transparent !important
+    &.expanded::after
+        transform: rotate(45deg) translate(0, 1rem)
+    & + .expandable-list
+        height: auto
+        overflow: hidden
+        color: $color-light-accent
+        transition: height 0.5s ease-in-out
+        li:not(:last-child)
+            border: 0 !important
+
+    
+
+input[type="checkbox"]
+    display: none
+    & + .fake-checkbox
+        width: 12px
+        height: 12px
+        border: 2px solid $color-light-accent
+        float: right
+        transform: translate(-12px, 12px)
+        transition: background-color linear 0.1s
+    &:checked + .fake-checkbox
+        background-color: $color-light-accent
+        &::after
+            content: ""
+            width: 5px
+            height: 9px
+            border: 3px solid $color-main
+                top: 0
+                left: 0
+            transform: rotate(45deg)
+            position: absolute
+            left: 2px
+            bottom: 1px
+
+
     
 app-search-bar::ng-deep
+    margin: 1rem
     input, .square
         display: inline-block
         transition-duration: 0s
-        width: 100%
+        width: 75%
         background-color: transparent
         font-size: 1.15rem
         color: $color-dark-accent

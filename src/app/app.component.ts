@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import AOS from 'aos';
+import { HomeComponent } from './pages/home/home.component';
+import { SlideshowService } from './services/slideshow.service';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,8 @@ import AOS from 'aos';
 })
 export class AppComponent implements OnInit {
   title = 'Practical Parts';
+  
+  constructor() {}
 
   ngOnInit(): void {
     AOS.init();

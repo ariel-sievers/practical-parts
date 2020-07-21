@@ -1,7 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ScullyLibModule } from '@scullyio/ng-lib-v8';
+import { CardModule } from './modules/card/card.module';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -12,10 +17,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './components/header/navbar/navbar.component';
 import { SearchBarComponent } from './components/header/search-bar/search-bar.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
-import { HttpClientModule } from '@angular/common/http';
 import { CarouselComponent } from './components/carousel/carousel.component';
-import { ScullyLibModule } from '@scullyio/ng-lib-v8';
-import { CardModule } from './modules/card/card.module';
 import { GenericImageComponent } from './components/generic-image/generic-image.component';
 
 
@@ -40,6 +42,8 @@ import { GenericImageComponent } from './components/generic-image/generic-image.
     HttpClientModule,
     CardModule,
     ScullyLibModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

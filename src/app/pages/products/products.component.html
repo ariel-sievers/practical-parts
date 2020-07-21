@@ -1,8 +1,46 @@
-<div class="grid">
-    <div class="container">
+<div class="grid outer-grid">
+    <div>
+        <h1 class="text-light-italic">Filter Products</h1>
+        <ul class="text-regular">
+            <form [formGroup]="filtersForm">
+                <li>
+                    <label for="newOnly">
+                        New Only
+                        <input type="checkbox" id="newOnly" formControlName="newOnly">
+                        <span class="fake-checkbox"></span>
+                    </label>
+                </li>
+                <li>
+                    <label for="hasPicture">
+                        Has Picture
+                        <input type="checkbox" id="hasPicture" formControlName="hasPicture">
+                        <span class="fake-checkbox"></span>
+                    </label>
+                </li>
+                <li class="expandable" id="collections" (click)="expand(collections.id)" [ngClass]="{'expanded': collectionsOpen}" #collections>
+                    Collections
+                </li>
+                <div class="expandable-list" >
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                </div>
+                <li class="expandable" id="priceRange" (click)="expand(priceRange.id)" [ngClass]="{'expanded': priceRangeOpen}" #priceRange>
+                    Price Range
+                </li>
+                <div class="expandable-list" >
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                </div>
+                <button type="submit" class="btn-light-accent">Apply Filters</button>
+            </form>
+        </ul>
+    </div>
+    <div>
         <app-search-bar></app-search-bar>
-        <div class="grid">
-            <p>products go here</p>
+        <div class="grid inner-grid">
+            <app-card *ngFor="let product of products">{{product.title}}</app-card>
         </div>
     </div>
 </div>

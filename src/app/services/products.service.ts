@@ -1,8 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { map, publishReplay, refCount } from 'rxjs/operators';
+import { HTTP_OPTIONS } from 'src/assets/http-options';
+
+export interface Variant {
+  id:       number,
+  title:    string,
+  price:    string,
+  quantity: number
+}
 
 export interface Product {
   id:          number,
@@ -10,20 +18,17 @@ export interface Product {
   handle:      string,
   description: string,
   images:      {}[],
+  options:     {}[],
+  variants:    Variant[],
   createdAt:   string,
   publishedAt: string
 }
 
-const httpOptions = {
-  headers: new HttpHeaders({ 
-    'Content-Type': 'application/json',
-    'Authorization': `Basic ${environment.BASE_64_STRING}` 
-  })
-};
+const httpOptions = HTTP_OPTIONS;
 
 const version        = environment.API_VERSION;
 const shop           = 'practical-parts';
-const productFields  = 'id,title,handle,body_html,images,created_at,published_at';
+const productFields  = 'id,title,handle,body_html,images,options,variants,created_at,published_at';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +36,7 @@ const productFields  = 'id,title,handle,body_html,images,created_at,published_at
 export class ProductsService {
   readonly url = `https://cors-anywhere.herokuapp.com/https://${shop}.myshopify.com/admin/api/${version}/products.json`;
 
-  products:           Observable<Product[]>;
+  products: Observable<Product[]>;
 
   constructor(private http: HttpClient) { }
 
@@ -46,15 +51,29 @@ export class ProductsService {
             const desiredProducts: Product[] = [];
             const products                   = data['products'];
             for (const product of products) {
-              const id            = product['id'];
-              const title         = product['title'];
-              const handle        = product['handle'];
-              const description   = product['body_html'];
-              const images        = product['images'];
-              const createdAt     = product['created_at'];
-              const publishedAt   = product['published_at'];
+              const id                  = product['id'];
+              const title               = product['title'];
+              const handle              = product['handle'];
+              const description         = product['body_html'];
+              const images              = product['images'];
+              const options             = product['options']
 
-              const newProduct    = { id, title, handle, description, images, createdAt, publishedAt };
+              const variants: Variant[] = [];
+              const productVariants     = product['variants'];
+              for (const variant of productVariants) {
+                const id         = variant.id;
+                const title      = variant.title;
+                const price      = variant.price;
+                const quantity   = variant.inventory_quantity;
+
+                const newVariant = { id, title, price, quantity };
+                variants.push(newVariant);
+              }
+
+              const createdAt          = product['created_at'];
+              const publishedAt        = product['published_at'];
+
+              const newProduct         = { id, title, handle, description, images, options, variants, createdAt, publishedAt };
               desiredProducts.push(newProduct);
             }
             return desiredProducts;
@@ -83,10 +102,24 @@ export class ProductsService {
             const handle        = product['handle'];
             const description   = product['body_html'];
             const images        = product['images'];
+            const options       = product['options'];
+
+            const variants: Variant[] = [];
+            const productVariants     = product['variants'];
+            for (const variant of productVariants) {
+              const id         = variant.id;
+              const title      = variant.title;
+              const price      = variant.price;
+              const quantity   = variant.inventory_quantity;
+
+              const newVariant = { id, title, price, quantity };
+              variants.push(newVariant);
+            }
+
             const createdAt     = product['created_at'];
             const publishedAt   = product['published_at'];
 
-            const newProduct    = { id, title, handle, description, images, createdAt, publishedAt };
+            const newProduct    = { id, title, handle, description, images, options, variants, createdAt, publishedAt };
             desiredProducts.push(newProduct);
           }
           return desiredProducts;

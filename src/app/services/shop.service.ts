@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { map, publishReplay, refCount } from 'rxjs/operators';
+import { HTTP_OPTIONS } from 'src/assets/http-options';
 
 export interface Address {
   address1: string,
@@ -13,12 +14,7 @@ export interface Address {
   country: string
 }
 
-const httpOptions = {
-  headers: new HttpHeaders({ 
-    'Content-Type': 'application/json',
-    'Authorization': `Basic ${environment.BASE_64_STRING}` 
-  })
-};
+const httpOptions = HTTP_OPTIONS;
 
 const version            = environment.API_VERSION;
 const shop               = 'practical-parts';
