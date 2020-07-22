@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
     
           // product with id 451235673709 should not be shown since it is not a real product
           // sold by Practical Parts
-          if (this.productsService.getDifferenceInMonths(createdAtUTC, todayUTC) <= 12
+          if (this.productsService.getDifferenceInMonths(createdAtUTC, todayUTC) <= 6
             && product.publishedAt !== null && product.id !== 4516235673709) {
             
             const dateNoTime  = createdAt.toString().split(" ");
