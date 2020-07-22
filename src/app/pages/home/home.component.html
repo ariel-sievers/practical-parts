@@ -1,5 +1,4 @@
 <div [hidden]="router.url !== '/'">
-    <div *ngIf="isLoading | async">Loading data...</div>
     <!-- any home page content should go here -->
     <div class="container welcome">
         <h1 class="text-center">Welcome to Practical Parts</h1>
@@ -26,6 +25,7 @@
                     We are always working on new products every day. Look here for updated information
                     on any new products we may have.
                 </p>
+                <app-loading *ngIf="isLoading | async"></app-loading>
                 <div *ngIf="newProducts" class="grid">
                     <ng-container *ngFor="let product of newProducts.reverse()">
                         <app-card class="product">

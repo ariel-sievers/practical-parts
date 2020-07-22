@@ -1,0 +1,36 @@
+@import '../../../assets/variables'
+    
+@keyframes spin
+    0%
+        transform: rotate(0deg)
+    100%
+        transform: rotate(359deg)
+
+*
+    box-sizing: border-box
+
+#spinner-container
+    display: flex
+    justify-content: center
+    align-items: center
+    
+#border
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 100px
+    height: 100px
+    padding: 2px
+    border-radius: 50%
+    background: $color-dark-accent
+    background: linear-gradient(0deg, rgba($color-dark-accent, 0.1) 33%, rgba($color-dark-accent, 1) 100%)
+    animation: spin .8s linear 0s infinite
+    .small
+        width: 50px
+        height: 50px
+
+#middle
+    background-color: $color-background
+    height: 100%
+    width: 100%
+    border-radius: 50%

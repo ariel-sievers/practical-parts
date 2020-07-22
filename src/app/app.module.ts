@@ -19,6 +19,7 @@ import { SearchBarComponent } from './components/header/search-bar/search-bar.co
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { GenericImageComponent } from './components/generic-image/generic-image.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { GenericImageComponent } from './components/generic-image/generic-image.
     BreadcrumbComponent,
     CarouselComponent,
     GenericImageComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
