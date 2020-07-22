@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { ProductsService, Product } from 'src/app/services/products.service';
 import { CollectionsService, Collection } from 'src/app/services/collections.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { LoadingService } from 'src/app/services/loading.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -9,25 +11,41 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
   styleUrls: ['./products.component.sass']
 })
 export class ProductsComponent implements OnInit {
-  resetButton:     any;
-  magnifyingGlass: any;
-  cancelButton:    any;
 
+  // search bar elements
+  resetButton:         any;
+  magnifyingGlass:     any;
+  cancelButton:        any;
+
+  // whether search bar is focused
+  focus:               boolean = false;
+
+  // heights to store for animating lists in 'filters' pane
   collectionsHeight:   number;
   priceRangeHeight:    number;
+  
+  // whether the collection or price filter lists are being shown
+  collectionsOpen:     boolean;
+  priceRangeOpen:      boolean;
 
-  products:        Product[];
-  collections:     Collection[];
+  // lists of products and collections within the store
+  products:            Product[];
+  collections:         Collection[];
 
-  filtersForm:     FormGroup;
+  // form for the 'filters' pane
+  filtersForm:         FormGroup;
 
-  collectionsOpen: boolean;
-  priceRangeOpen:  boolean;
+  // for checking if products are loading
+  isLoading:           BehaviorSubject<boolean>; 
+
 
   constructor(private el: ElementRef, private renderer: Renderer2, private fb: FormBuilder,
-    public productsService: ProductsService, public collectionsService: CollectionsService) { }
+    public productsService: ProductsService, public collectionsService: CollectionsService,
+    public loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.isLoading = this.loadingService.isLoading;
+
     this.searchBarViewInit();
     this.expandableListHeightsInit();
     
@@ -40,6 +58,73 @@ export class ProductsComponent implements OnInit {
   get collectionsControls() { return this.filtersForm.get('collections') }
   get priceControls()       { return this.filtersForm.get('priceRanges'); }
 
+
+  /**
+   * Change search bar component's view and functionality.
+   */
+  searchBarViewInit(): void {
+    this.resetButton     = this.el.nativeElement.querySelector('.reset-btn');
+    this.magnifyingGlass = this.resetButton.querySelector('.magnifying-glass');
+    this.cancelButton    = this.resetButton.querySelector('.cancel');
+
+    // remove animation on click of search bar's reset button
+    this.resetButton.removeAllListeners('click');
+
+    // add event listeners so that reset button animation occurs on input focus and click of magnifying glass
+    const searchInput    = this.el.nativeElement.querySelector('app-search-bar input');
+    this.renderer.listen(this.resetButton, 'click', ($event: any) => this.toggleFocus(searchInput));
+    this.renderer.listen(searchInput, 'focus', ($event: any) => this.showCancelButton());
+    this.renderer.listen(searchInput, 'blur', ($event: any) => this.showMagnifyingGlass());
+    
+  }
+
+  toggleFocus(el: any) {
+    if (this.focus) {
+      el.blur();
+      this.focus = false;
+    } else {
+      el.focus();
+      this.focus = true;
+    }
+  }
+
+  /**
+   * Transition reset button from a magnifying glass to an 'X'.
+   * Also ensure the cursor is changed to pointer.
+   */
+  showCancelButton() {
+    this.renderer.addClass(this.magnifyingGlass, 'cancel-btn-1');
+    this.renderer.addClass(this.cancelButton, 'cancel-btn-2');
+  }
+
+  /**
+   * Transition reset button from 'X' to a magnifying glass.
+   * Also change cursor to default.
+   */
+  showMagnifyingGlass() {
+    this.renderer.removeClass(this.magnifyingGlass, 'cancel-btn-1');
+    this.renderer.removeClass(this.cancelButton, 'cancel-btn-2');
+  }
+
+  /**
+   * Get the heights of the lists in the filters pane and store them in their
+   * respective height variables (i.e. 'collectionsHeight').
+   */
+  expandableListHeightsInit(): void {
+
+    // get their elements
+    const collectionsEl = this.el.nativeElement.querySelector('#collections + .expandable-list');
+    const priceRangeEl  = this.el.nativeElement.querySelector('#priceRange + .expandable-list');
+    
+    // get their heights
+    this.collectionsHeight = collectionsEl.offsetHeight;
+    this.priceRangeHeight  = priceRangeEl.offsetHeight;
+
+    // set heights to 0
+    this.renderer.setStyle(collectionsEl, 'height', 0);
+    this.renderer.setStyle(priceRangeEl, 'height', 0);
+
+  }
 
   /**
    * Return a form group for the collections and price filters.
@@ -62,27 +147,11 @@ export class ProductsComponent implements OnInit {
     })
   }
 
-  expandableListHeightsInit() {
-
-    // get their elements
-    const collectionsEl = this.el.nativeElement.querySelector('#collections + .expandable-list');
-    const priceRangeEl  = this.el.nativeElement.querySelector('#priceRange + .expandable-list');
-    
-    // get their heights
-    this.collectionsHeight = collectionsEl.offsetHeight;
-    this.priceRangeHeight  = priceRangeEl.offsetHeight;
-
-    // set heights to 0
-    this.renderer.setStyle(collectionsEl, 'height', 0);
-    this.renderer.setStyle(priceRangeEl, 'height', 0);
-
-  }
-
-    /**
+  /**
    * Toggle expansion of an element if id matches 'priceRange' or 'collections'.
    * @param elementId id of element to call expand() on
    */
-  expand(elementId: string) {
+  expand(elementId: string): void {
     if (elementId === 'priceRange') {
       this.priceRangeOpen = !this.priceRangeOpen;
 
@@ -105,40 +174,6 @@ export class ProductsComponent implements OnInit {
     } else {
       console.log(`Element with id ${elementId} cannot be opened.`);
     }
-  }
-
-  searchBarViewInit() {
-    this.resetButton     = this.el.nativeElement.querySelector('.reset-btn');
-    this.magnifyingGlass = this.resetButton.querySelector('.magnifying-glass');
-    this.cancelButton    = this.resetButton.querySelector('.cancel');
-
-    // remove animation on click of search bar's reset button
-    this.resetButton.removeAllListeners('click');
-
-    // add event listeners so that reset button animation occurs on input focus
-    const searchInput    = this.el.nativeElement.querySelector('app-search-bar input');
-    this.renderer.listen(searchInput, 'focus', ($event: any) => this.showCancelButton());
-    this.renderer.listen(searchInput, 'blur', ($event: any) => this.showMagnifyingGlass());
-  }
-
-  /**
-   * Transition reset button from a magnifying glass to an 'X'.
-   * Also ensure the cursor is changed to pointer.
-   */
-  showCancelButton() {
-    this.renderer.addClass(this.magnifyingGlass, 'cancel-btn-1');
-    this.renderer.addClass(this.cancelButton, 'cancel-btn-2');
-    this.renderer.setStyle(this.resetButton, 'cursor', 'pointer');
-  }
-
-  /**
-   * Transition reset button from 'X' to a magnifying glass.
-   * Also change cursor to default.
-   */
-  showMagnifyingGlass() {
-    this.renderer.removeClass(this.magnifyingGlass, 'cancel-btn-1');
-    this.renderer.removeClass(this.cancelButton, 'cancel-btn-2');
-    this.renderer.setStyle(this.resetButton, 'cursor', 'default');
   }
 
   /**
