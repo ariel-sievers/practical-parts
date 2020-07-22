@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShopService, Address } from 'src/app/services/shop.service';
+import { BehaviorSubject } from 'rxjs';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-contact',
@@ -10,9 +12,13 @@ export class ContactComponent implements OnInit {
   contactInfo: string[];
   hoursAvailable?: string; // times for contact by phone
 
-  constructor(private shopService: ShopService) { }
+  isLoading: BehaviorSubject<boolean>;
+
+  constructor(private shopService: ShopService, private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.isLoading = this.loadingService.isLoading;
+
     this.getContactInformation();
     if (!this.hoursAvailable) {
       this.hoursAvailable = this.setConstantHoursAvailable("10AM", "11PM", true, true);
@@ -73,12 +79,13 @@ export class ContactComponent implements OnInit {
    * - Index 2 : store owner
    */
   getContactInformation(): void {
+    this.loadingService.start();
     this.shopService.getShopContactInfo().subscribe(
       data => {
         this.contactInfo = data
       },
       err => console.log(err),
-      () => console.log('done loading shop information')
+      () => this.loadingService.end()
     )
   }
 

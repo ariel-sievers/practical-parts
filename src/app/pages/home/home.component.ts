@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   constructor(public shopService: ShopService, public productsService: ProductsService,
     public collectionsService: CollectionsService, public slideshowService: SlideshowService,
-    public loadingService: LoadingService, public router: Router ) {}
+    private loadingService: LoadingService, public router: Router ) {}
 
   ngOnInit() {
     this.isLoading = this.loadingService.isLoading;

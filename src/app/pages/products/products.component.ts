@@ -78,6 +78,10 @@ export class ProductsComponent implements OnInit {
     
   }
 
+  /**
+   * Toggle focus on an element.
+   * @param el element to toggle focus on
+   */
   toggleFocus(el: any) {
     if (this.focus) {
       el.blur();
