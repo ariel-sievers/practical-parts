@@ -39,6 +39,7 @@
     </div>
     <div>
         <app-search-bar></app-search-bar>
+        <app-loading *ngIf="isLoading | async"></app-loading>
         <div class="grid inner-grid">
             <app-card *ngFor="let product of products">{{product.title}}</app-card>
         </div>

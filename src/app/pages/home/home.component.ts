@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
           }
         }
     },
-    err => console.log('error ' + err),
+    err => { },
     () => {
       this.loadingService.end();
     });

@@ -188,13 +188,18 @@ export class ProductsComponent implements OnInit {
 
     const desiredCollections: Collection[] = [];
 
-    this.collectionsService.getSmartCollections().subscribe( data => {
-      for (const collection of data) {
-        if (collection.publishedAt !== null) {
-          desiredCollections.push(collection);
+    this.loadingService.start();
+    this.collectionsService.getSmartCollections().subscribe(
+      data => {
+        for (const collection of data) {
+          if (collection.publishedAt !== null) {
+            desiredCollections.push(collection);
+          }
         }
-      }
-    })
+      },
+      err => { },
+      () => this.loadingService.end()
+    );
 
     // collection with id 38583173235 should not be shown since it is the 'home page' collection
     this.collectionsService.getCustomCollections().subscribe( data => {
@@ -214,13 +219,18 @@ export class ProductsComponent implements OnInit {
   getAllProducts(): Product[] {
     const desiredProducts: Product[] = [];
 
-    this.productsService.getProducts().subscribe( data => {
-      for (const product of data) {
-        if (product.publishedAt !== null && product.id !== 4516235673709) {
-          desiredProducts.push(product);
+    this.loadingService.start();
+    this.productsService.getProducts().subscribe(
+      data => {
+        for (const product of data) {
+          if (product.publishedAt !== null && product.id !== 4516235673709) {
+            desiredProducts.push(product);
+          }
         }
-      }
-    })
+      },
+      err => { },
+      () => this.loadingService.end()
+    )
 
     return desiredProducts;
   }
@@ -232,13 +242,18 @@ export class ProductsComponent implements OnInit {
   getProductsByCollection(collectionId: number): Product[] {
     const desiredProducts: Product[] = [];
 
-    this.productsService.getProductsByCollection(collectionId).subscribe( data => {
-      for (const product of data) { 
-        if (product.publishedAt !== null && product.id !== 4516235673709) {
-          desiredProducts.push(product);
+    this.loadingService.start();
+    this.productsService.getProductsByCollection(collectionId).subscribe(
+      data => {
+        for (const product of data) { 
+          if (product.publishedAt !== null && product.id !== 4516235673709) {
+            desiredProducts.push(product);
+          }
         }
-      }
-    });
+      },
+      err => { },
+      () => this.loadingService.end()
+    );
 
     return desiredProducts;
   }

@@ -84,9 +84,9 @@ export class ContactComponent implements OnInit {
       data => {
         this.contactInfo = data
       },
-      err => console.log(err),
+      err => { },
       () => this.loadingService.end()
-    )
+    );
   }
 
 }
