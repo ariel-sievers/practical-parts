@@ -47,9 +47,6 @@ a
   &:hover
     text-decoration: underline
 
-button
-  font-family: $text-regular !important
-
 .text-larger
     font-size: 1.15rem
 
@@ -59,24 +56,40 @@ button
   &::before
     content: '⚙️    '
     white-space: pre
+
+button
+  font-family: $text-regular !important
+  transition: all 0.4s ease
   
-.btn-regular
-  @include button(regular)
+.btn
+  &-regular
+    @include button(regular)
+  &-main
+    @include button(main)
+  &-dark-accent
+    @include button(dark-accent)
+  &-light-accent
+    @include button(light-accent)
+  &-danger
+    @include button(danger)
+  &-success
+    @include button(success)
 
-.btn-main
-  @include button(main)
-
-.btn-dark-accent
-  @include button(dark-accent)
-
-.btn-light-accent
-  @include button(light-accent)
-
-.btn-danger
-  @include button(danger)
-
-.btn-success
-  @include button(success)
+  /// outlined buttons
+  &-outline
+    &-regular
+      @include outlineButton(regular)
+    &-main
+      @include outlineButton(main)
+    &-dark-accent
+      @include outlineButton(dark-accent)
+    &-light-accent
+      @include outlineButton(light-accent)
+    &-danger
+      @include outlineButton(danger)
+    &-success
+      @include outlineButton(success)
+  
 
 .background
   background-color: $color-background

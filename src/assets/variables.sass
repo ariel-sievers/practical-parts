@@ -50,7 +50,7 @@ $color-dark-accent-darker: #00284d
   margin-bottom: 0.5rem
   cursor: pointer
   @if $type == regular
-    background-color: $color-background
+    background-color: transparent
     &:hover
       filter: brightness(85%)
   @else if $type == main
@@ -77,6 +77,55 @@ $color-dark-accent-darker: #00284d
     color: white
     &:hover
       filter: brightness(90%)
+  @else 
+    @error "Type #{$type} is not known. Allowed types include regular, main, dark-accent, light-accent, danger, or success."
+
+@mixin outlineButton($type)
+  outline: none
+  border: 1px solid
+    radius: 4px
+  background-color: transparent
+  font: $text-regular
+  padding: 0.75rem 1rem
+  margin-top: 0.5rem
+  margin-bottom: 0.5rem
+  cursor: pointer
+  @if $type == regular
+    border-color: black
+    color: black
+    &:hover
+      background-color: black
+      color: white
+  @else if $type == main
+    border-color: $color-main
+    color: $color-main
+    &:hover
+      background-color: $color-main
+      color: $color-light-accent
+  @else if $type == dark-accent
+    border-color: $color-dark-accent
+    color: $color-dark-accent
+    &:hover
+      background-color: $color-dark-accent-lighter
+          color: $color-light-accent
+  @else if $type == light-accent
+    border-color: $color-light-accent
+    color: $color-light-accent
+    &:hover
+      background-color: $color-light-accent
+      color: $color-dark-accent
+  @else if $type == danger
+    border-color: #df2020
+    color: #df2020
+    &:hover
+      background-color: #df2020
+      color: white
+  @else if $type == success
+    border-color: #2eb863
+    color: #2eb863
+    &:hover
+      background-color: #2eb863
+      color: black
   @else 
     @error "Type #{$type} is not known. Allowed types include regular, main, dark-accent, light-accent, danger, or success."
 
