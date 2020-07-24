@@ -1,12 +1,13 @@
 @import '../../../assets/variables'
 
+/** PAGE LAYOUT **/
 .grid
     &.outer-grid
         grid-template-columns: 300px 1fr
         grid-gap: 20px
         padding: 1rem
             left: 0
-        div:first-child
+        #filter-pane
             background-color: $color-main
             color: $color-light-accent
             @include box-shadow($soft-shadows)
@@ -34,13 +35,32 @@
                     border-bottom: 1px solid $color-light-accent
                     label
                         display: block
+                        font-size: 1.5rem
                         &:hover
                             cursor: pointer
                     &:hover
                         background-color: $color-main-lighter
+        #products-list div:first-child
+            display: grid
+            grid-template-columns: repeat(25, 1fr)
+            app-search-bar
+                grid-column-start: 1
+                grid-column-end: 26
+                grid-row-start: 1
+            #sort
+                align-self: center
+                grid-column-start: 21
+                grid-column-end: 26
+                grid-row-start: 1
         div:nth-child(2)
             justify-self: stretch
 
+
+#collections li
+    border: 0 !important
+
+
+/** EXPANDABLE LISTS IN FILTER PANE **/
 .expandable
     transition: border-color 0.1s linear
     &:hover
@@ -68,7 +88,7 @@
             border: 0 !important
 
     
-
+/** CUSTOM CHECKBOX **/
 input[type="checkbox"]
     display: none
     & + .fake-checkbox
@@ -93,7 +113,7 @@ input[type="checkbox"]
             bottom: 1px
 
 
-    
+/** 'SIMPLE' VERSION OF APP-SEARCH-BAR **/
 app-search-bar::ng-deep
     margin: 1rem
     input, .square

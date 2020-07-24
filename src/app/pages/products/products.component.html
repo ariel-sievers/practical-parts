@@ -1,8 +1,8 @@
 <div class="grid outer-grid">
-    <div>
+    <div id="filter-pane">
         <h1 class="text-light-italic">Filter Products</h1>
         <ul class="text-regular">
-            <form [formGroup]="filtersForm">
+            <form [formGroup]="filtersForm" (ngSubmit)="applyFilters()">
                 <li>
                     <label for="newOnly">
                         New Only
@@ -17,31 +17,34 @@
                         <span class="fake-checkbox"></span>
                     </label>
                 </li>
-                <li class="expandable" id="collections" (click)="expand(collections.id)" [ngClass]="{'expanded': collectionsOpen}" #collections>
+                <li id="collections" #collections>
                     Collections
+                    <ul>
+                        <li *ngFor="let collection of collectionsl" #collections>
+                            <input type="checkbox">
+                            <span class="fake-checkbox"></span>
+                            {{collection.id}}
+                        </li>
+                    </ul>
                 </li>
-                <div class="expandable-list" >
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                </div>
-                <li class="expandable" id="priceRange" (click)="expand(priceRange.id)" [ngClass]="{'expanded': priceRangeOpen}" #priceRange>
+                <li class="expandable" id="priceRange" (click)="expand()" [ngClass]="{'expanded': priceRangeOpen}" #priceRange>
                     Price Range
                 </li>
                 <div class="expandable-list" >
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
+<!--                     <li *ngFor="let range of priceControls">1</li> -->
                 </div>
                 <button type="submit" class="btn-light-accent">Apply Filters</button>
             </form>
         </ul>
     </div>
-    <div>
-        <app-search-bar></app-search-bar>
+    <div id="products-list">
+        <div>
+            <app-search-bar></app-search-bar>
+            <button id="sort" class="btn-dark-accent">sort placeholder</button>
+        </div>
         <app-loading *ngIf="isLoading | async"></app-loading>
         <div class="grid inner-grid">
-            <app-card *ngFor="let product of products">{{product.title}}</app-card>
+            <app-card *ngFor="let product of products">{{ product.title }}</app-card>
         </div>
     </div>
 </div>
