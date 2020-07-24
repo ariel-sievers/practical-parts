@@ -20,17 +20,15 @@ export class ProductsComponent implements OnInit {
   // whether search bar is focused
   focus:               boolean = false;
 
-  // heights to store for animating lists in 'filters' pane
-  collectionsHeight:   number;
+  // height to store for animating list in 'filters' pane
   priceRangeHeight:    number;
   
   // whether the collection or price filter lists are being shown
-  collectionsOpen:     boolean;
-  priceRangeOpen:      boolean;
+  priceRangeOpen:      boolean = false;
 
   // lists of products and collections within the store
-  products:            Product[];
-  collections:         Collection[];
+  productsList:            Product[];
+  collectionsList:         Collection[];
 
   // form for the 'filters' pane
   filtersForm:         FormGroup;
@@ -47,17 +45,16 @@ export class ProductsComponent implements OnInit {
     this.isLoading = this.loadingService.isLoading;
 
     this.searchBarViewInit();
-    this.expandableListHeightsInit();
+    this.priceRangesHeightInit();
     
-    this.products    = this.getAllProducts();
-    this.collections = this.getCollections();
+    this.productsList    = this.getAllProducts();
+    this.collectionsList = this.getCollections();
 
     this.filtersForm = this.createFiltersForm();
   }
 
   get collectionsControls() { return this.filtersForm.get('collections') }
   get priceControls()       { return this.filtersForm.get('priceRanges'); }
-
 
   /**
    * Change search bar component's view and functionality.
@@ -111,23 +108,11 @@ export class ProductsComponent implements OnInit {
   }
 
   /**
-   * Get the heights of the lists in the filters pane and store them in their
-   * respective height variables (i.e. 'collectionsHeight').
+   * Get the height of the price range list in the filters pane.
    */
-  expandableListHeightsInit(): void {
-
-    // get their elements
-    const collectionsEl = this.el.nativeElement.querySelector('#collections + .expandable-list');
+  priceRangesHeightInit(): void {
     const priceRangeEl  = this.el.nativeElement.querySelector('#priceRange + .expandable-list');
-    
-    // get their heights
-    this.collectionsHeight = collectionsEl.offsetHeight;
     this.priceRangeHeight  = priceRangeEl.offsetHeight;
-
-    // set heights to 0
-    this.renderer.setStyle(collectionsEl, 'height', 0);
-    this.renderer.setStyle(priceRangeEl, 'height', 0);
-
   }
 
   /**
@@ -137,7 +122,7 @@ export class ProductsComponent implements OnInit {
     return this.fb.group({
       newOnly:    [''],
       hasPicture: [''],
-      collections: this.collectionsService.toFormGroup(this.collections),
+      collections: this.collectionsService.toFormGroup(this.collectionsList),
       priceRanges: this.fb.group({
         under10:              [''],
         tenTo25:              [''],
@@ -152,31 +137,16 @@ export class ProductsComponent implements OnInit {
   }
 
   /**
-   * Toggle expansion of an element if id matches 'priceRange' or 'collections'.
-   * @param elementId id of element to call expand() on
+   * Toggle expansion of price range list in filter pane.
    */
-  expand(elementId: string): void {
-    if (elementId === 'priceRange') {
-      this.priceRangeOpen = !this.priceRangeOpen;
+  expand(): void {
+    this.priceRangeOpen = !this.priceRangeOpen;
 
-      const priceRangeEl = this.el.nativeElement.querySelector('#priceRange + .expandable-list');
-      if (this.priceRangeOpen) {
-        this.renderer.setStyle(priceRangeEl, 'height', `${this.priceRangeHeight}px`);
-      } else {
-        this.renderer.setStyle(priceRangeEl, 'height', 0);
-      }
-
-    } else if (elementId === 'collections') {
-      this.collectionsOpen = !this.collectionsOpen;
-
-      const collectionsEl = this.el.nativeElement.querySelector('#collections + .expandable-list');
-      if (this.collectionsOpen) {
-        this.renderer.setStyle(collectionsEl, 'height', `${this.collectionsHeight}px`);
-      } else {
-        this.renderer.setStyle(collectionsEl, 'height', 0);
-      }
+    const priceRangeEl = this.el.nativeElement.querySelector('#priceRange + .expandable-list');
+    if (this.priceRangeOpen) {
+      this.renderer.setStyle(priceRangeEl, 'height', `${this.priceRangeHeight}px`);
     } else {
-      console.log(`Element with id ${elementId} cannot be opened.`);
+      this.renderer.setStyle(priceRangeEl, 'height', 0);
     }
   }
 
@@ -184,7 +154,7 @@ export class ProductsComponent implements OnInit {
    * Get an array of collections, both custom and smart, that are used in the store.
    */
   getCollections(): Collection[] {
-    if (this.collections) { return; }
+    if (this.collectionsList) { return; }
 
     const desiredCollections: Collection[] = [];
 
@@ -201,14 +171,19 @@ export class ProductsComponent implements OnInit {
       () => this.loadingService.end()
     );
 
+    this.loadingService.start();
     // collection with id 38583173235 should not be shown since it is the 'home page' collection
-    this.collectionsService.getCustomCollections().subscribe( data => {
-      for (const collection of data) {
-        if (collection.publishedAt !== null && collection.id !== 38583173235) {
-          desiredCollections.push(collection);
+     this.collectionsService.getCustomCollections().subscribe(
+      data => {
+        for (const collection of data) {
+          if (collection.publishedAt !== null && collection.id !== 38583173235) {
+            desiredCollections.push(collection);
+          }
         }
-      }
-    })
+      },
+      err => { },
+      () => this.loadingService.end()
+    );
 
     return desiredCollections;
   }
@@ -256,6 +231,10 @@ export class ProductsComponent implements OnInit {
     );
 
     return desiredProducts;
+  }
+
+  applyFilters() {
+
   }
 
 }
