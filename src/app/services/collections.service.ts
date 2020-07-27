@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
-import { map, publishReplay, refCount } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, publishReplay, refCount, timeout, catchError } from 'rxjs/operators';
 import { HTTP_OPTIONS } from '../../assets/http-options'
 import { FormGroup, FormControl } from '@angular/forms';
 
@@ -57,7 +57,11 @@ export class CollectionsService {
             return desiredCollections;
           }),
           publishReplay(1), 
-          refCount()
+          refCount(),
+          timeout(30000),
+          catchError(e => {
+            return of(null);
+          })
       )
     }
     return this.customCollections;
@@ -87,24 +91,38 @@ export class CollectionsService {
             return desiredCollections;
           }),
           publishReplay(1), 
-          refCount()
+          refCount(),
+          timeout(30000),
+          catchError(e => {
+            return of(null);
+          })
       )
     }
     return this.smartCollections;
   }
 
-  /**
- * Create a form group from a list of collections.
- * @param collections an array of collections to group
- */
-  toFormGroup(collections: Collection[]): FormGroup {
-    let group: any = {};
+  getCollectionById(id: number) {
+    return this.http.get(
+      `https://cors-anywhere.herokuapp.com/https://${shop}.myshopify.com/admin/api/2020-07/collections/${id}.json?fields=${collectionFields}`,
+      httpOptions).pipe(
+        map( data => {
+          const collection = data['collection'];
 
-    collections.forEach(c => {
-      group[c.id] = new FormControl('');
-    })
+          const id              = collection['id'];
+          const title           = collection['title'];
+          const handle          = collection['handle'];
+          const description     = collection['body_html'];
+          const image           = collection['image'];
+          const publishedAt     = collection['published_at'];
 
-    return new FormGroup(group);
+          const newCollection   = { id, title, handle, description, image, publishedAt };
+          return newCollection;
+        }),
+        timeout(30000),
+        catchError(e => {
+          return of(null);
+        })
+      );
   }
 
   /**

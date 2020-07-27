@@ -82,7 +82,11 @@ export class ContactComponent implements OnInit {
     this.loadingService.start();
     this.shopService.getShopContactInfo().subscribe(
       data => {
-        this.contactInfo = data
+        if (data) {
+          this.contactInfo = data;
+        } else {
+          this.contactInfo = [];
+        }
       },
       err => { },
       () => this.loadingService.end()

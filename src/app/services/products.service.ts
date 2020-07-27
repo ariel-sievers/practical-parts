@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { map, publishReplay, refCount } from 'rxjs/operators';
+import { Observable, BehaviorSubject, of } from 'rxjs';
+import { map, publishReplay, refCount, timeout, catchError } from 'rxjs/operators';
 import { HTTP_OPTIONS } from 'src/assets/http-options';
 import { LoadingService } from './loading.service';
 
@@ -82,7 +82,11 @@ export class ProductsService {
             return desiredProducts;
           }),
           publishReplay(1), 
-          refCount()
+          refCount(),
+          timeout(30000),
+          catchError(e => {
+            return of(null);
+          })
       )
     }
     return this.products;
@@ -125,7 +129,12 @@ export class ProductsService {
             const newProduct    = { id, title, handle, description, images, options, variants, createdAt, publishedAt };
             desiredProducts.push(newProduct);
           }
+
           return desiredProducts;
+        }),
+        timeout(30000),
+        catchError(e => {
+          return of(null);
         })
       )
   }
@@ -155,18 +164,20 @@ export class ProductsService {
     
     this.getProducts().subscribe(
       data => {
-        for (const product of data) {
-          const createdAt    = new Date(product.createdAt);
-          const createdAtUTC = Date.UTC(createdAt.getFullYear(), createdAt.getMonth(), createdAt.getDate());
-    
-          // product with id 451235673709 should not be shown since it is not a real product
-          // sold by Practical Parts
-          if (this.differenceInMonths(createdAtUTC, todayUTC) <= 12
-            && product.publishedAt !== null && product.id !== 4516235673709) {
-            
-            const dateNoTime  = createdAt.toString().split(" ");
-            product.createdAt =  `${dateNoTime[0]} ${dateNoTime[1]} ${dateNoTime[2]} ${dateNoTime[3]}`;
-            desiredProducts.push(product);
+        if (data) {
+          for (const product of data) {
+            const createdAt    = new Date(product.createdAt);
+            const createdAtUTC = Date.UTC(createdAt.getFullYear(), createdAt.getMonth(), createdAt.getDate());
+      
+            // product with id 451235673709 should not be shown since it is not a real product
+            // sold by Practical Parts
+            if (this.differenceInMonths(createdAtUTC, todayUTC) <= 12
+              && product.publishedAt !== null && product.id !== 4516235673709) {
+              
+              const dateNoTime  = createdAt.toString().split(" ");
+              product.createdAt =  `${dateNoTime[0]} ${dateNoTime[1]} ${dateNoTime[2]} ${dateNoTime[3]}`;
+              desiredProducts.push(product);
+            }
           }
         }
       },

@@ -1,4 +1,5 @@
 <app-loading *ngIf="isLoading | async"></app-loading>
+<div *ngIf="!contactInfo"><p>Timeout occurred. Try reloading the page.</p></div>
 <div *ngIf="contactInfo" class="container">
     <h1>Contact Us</h1>
     <table>

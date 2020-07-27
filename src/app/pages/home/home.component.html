@@ -48,6 +48,9 @@
                         </app-card>
                     </ng-container>
                 </div>
+                <div *ngIf="!newProducts">
+                    <p>Timeout occurred. Try reloading the page.</p>
+                </div>
             </section>
         </div>
     </div>

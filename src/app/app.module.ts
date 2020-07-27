@@ -20,6 +20,8 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { GenericImageComponent } from './components/generic-image/generic-image.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { TagsListComponent } from './components/tags-list/tags-list.component';
+
 
 
 @NgModule({
@@ -37,6 +39,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     CarouselComponent,
     GenericImageComponent,
     LoadingComponent,
+    TagsListComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,32 @@
+@import '../../../assets/variables'
+    
+#tags-container
+    display: flex
+    margin: 0.5rem
+
+.tag
+    color: $color-dark-accent
+    background-color: $color-light-accent
+    padding: 3px 28px 3px 7px
+    border-radius: 4px
+    margin: 5px
+    position: relative
+    white-space: nowrap
+
+
+.remove-btn
+    width: 15px
+    height: 15px
+    &:hover
+        cursor: pointer
+    &::before, &::after
+        position: absolute
+        content: ""
+        background-color: $color-dark-accent
+        width: 2px
+        height: 10px
+        transform: rotate(-45deg)
+        right: 12px
+        top: 12px
+    &::after
+        transform: rotate(45deg)

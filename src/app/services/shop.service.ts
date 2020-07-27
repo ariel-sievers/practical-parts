@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
-import { map, publishReplay, refCount } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, publishReplay, refCount, timeout, catchError } from 'rxjs/operators';
 import { HTTP_OPTIONS } from 'src/assets/http-options';
 
 export interface Address {
@@ -56,7 +56,11 @@ export class ShopService {
             return [ email, phone, owner ];
           }),
           publishReplay(3), 
-          refCount()
+          refCount(),
+          timeout(30000),
+          catchError(e => {
+            return of(null);
+          })
         )
     }
 
@@ -81,7 +85,11 @@ export class ShopService {
             return { address1, address2, city, province, zip, country };
           }),
           publishReplay(1), 
-          refCount()
+          refCount(),
+          timeout(30000),
+          catchError(e => {
+            return of(null);
+          })
       )
     }
 

@@ -17,21 +17,81 @@
                         <span class="fake-checkbox"></span>
                     </label>
                 </li>
-                <li id="collections" #collections>
+                <li *ngIf="collectionsList" id="collections">
                     Collections
                     <ul>
-                        <li *ngFor="let collection of collectionsList" #collections>
-                            <input type="checkbox">
-                            <span class="fake-checkbox"></span>
-                            {{collection.id}}
+                        <li *ngFor="let collection of collectionsList">
+                            <label for="{{collection.title}}_{{collection.id}}">
+                                {{ collection.title }}
+                                <input type="radio" id="{{collection.title}}_{{collection.id}}" (click)="toggleRadio($event)"
+                                    value="{{collection.title}}_{{collection.id}}" formControlName="collections" #collections>
+                                <span class="fake-radio"></span>
+                            </label>
                         </li>
                     </ul>
                 </li>
-                <li class="expandable" id="priceRange" (click)="expand()" [ngClass]="{'expanded': priceRangeOpen}" #priceRange>
+                <li class="expandable" id="priceRange" (click)="expand()" [ngClass]="{'expanded': priceRangeOpen}">
                     Price Range
                 </li>
-                <div class="expandable-list" >
-<!--                     <li *ngFor="let range of priceControls">1</li> -->
+                <div class="expandable-list" formGroupName="priceRanges">
+                    <ul>
+                        <li>
+                            <label for="under10">
+                                $10 and under
+                                <input type="checkbox" id="under10" formControlName="under10" #priceRanges>
+                                <span class="fake-checkbox"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label for="tenTo25">
+                                $10 - $25
+                                <input type="checkbox" id="tenTo25" formControlName="tenTo25" #priceRanges>
+                                <span class="fake-checkbox"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label for="twentyFiveTo50">
+                                $25 - $50
+                                <input type="checkbox" id="twentyFiveTo50" formControlName="twentyFiveTo50" #priceRanges>
+                                <span class="fake-checkbox"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label for="fiftyTo75">
+                                $50 - $75
+                                <input type="checkbox" id="fiftyTo75" formControlName="fiftyTo75" #priceRanges>
+                                <span class="fake-checkbox"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label for="seventyFiveTo100">
+                                $75 - $100
+                                <input type="checkbox" id="seventyFiveTo100" formControlName="seventyFiveTo100" #priceRanges>
+                                <span class="fake-checkbox"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label for="oneHundredTo150">
+                                $100 - $150
+                                <input type="checkbox" id="oneHundredTo150" formControlName="oneHundredTo150" #priceRanges>
+                                <span class="fake-checkbox"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label for="oneHundredFiftyTo200">
+                                $150 - $200
+                                <input type="checkbox" id="oneHundredFiftyTo200" formControlName="oneHundredFiftyTo200" #priceRanges>
+                                <span class="fake-checkbox"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label for="above200">
+                                $200 and above
+                                <input type="checkbox" id="above200" formControlName="above200" #priceRanges>
+                                <span class="fake-checkbox"></span>
+                            </label>
+                        </li>
+                    </ul>
                 </div>
                 <button type="submit" class="btn-outline-light-accent">Apply Filters</button>
             </form>
@@ -41,10 +101,14 @@
         <div>
             <app-search-bar></app-search-bar>
             <button id="sort" class="btn-dark-accent">sort placeholder</button>
+            <app-tags-list [tags]="filters"></app-tags-list>
         </div>
         <app-loading *ngIf="isLoading | async"></app-loading>
         <div class="grid inner-grid">
-            <app-card *ngFor="let product of productsList">{{ product.title }}</app-card>
+            <app-card *ngFor="let product of productsList">
+                {{ product.title }} <b>${{product.variants[0].price}}</b>
+            </app-card>
+            <ng-container *ngIf="!productsList"><p>Timeout occurred. Try reloading the page.</p></ng-container>
         </div>
     </div>
 </div>

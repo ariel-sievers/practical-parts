@@ -38,7 +38,7 @@
                         font-size: 1.5rem
                         &:hover
                             cursor: pointer
-                    &:hover
+                    &:hover:not(#collections)
                         background-color: $color-main-lighter
         #products-list div:first-child
             display: grid
@@ -56,8 +56,25 @@
             justify-self: stretch
 
 
-#collections li
-    border: 0 !important
+#collections, #priceRange + div
+    &:not(#collections) ul
+        padding: 0.5rem 0.75rem 0.5rem 2.5rem
+    li
+        border: 0 !important
+        label
+            position: relative
+            cursor: pointer
+            .fake-checkbox
+                position: absolute
+                left: -1rem
+                top: -3px
+            .fake-radio
+                position: absolute
+                left: -2rem
+                top: 0.5rem
+
+#priceRange + div label, #collections label
+    font-size: 1.25rem !important
 
 
 /** EXPANDABLE LISTS IN FILTER PANE **/
@@ -111,6 +128,26 @@ input[type="checkbox"]
             position: absolute
             left: 2px
             bottom: 1px
+
+
+/** CUSTOM RADIO **/
+input[type="radio"]
+    display: none
+    & + .fake-radio
+        width: 12px
+        height: 12px
+        border: 2px solid $color-light-accent
+            radius: 50%
+    &:checked + .fake-radio::after
+        content: ""
+        width: 5px
+        height: 5px
+        border-radius: 50%
+        position: absolute
+        left: 3.5px
+        bottom: 3px
+        background-color: $color-light-accent
+
 
 
 /** 'SIMPLE' VERSION OF APP-SEARCH-BAR **/

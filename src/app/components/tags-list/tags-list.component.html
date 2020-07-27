@@ -1,0 +1,5 @@
+<div id="tags-container">
+    <span *ngFor="let tag of tags" class="tag text-regular">
+        {{ tag }}<span class="remove-btn" (click)="remove(tag)"></span>
+    </span>
+</div>
