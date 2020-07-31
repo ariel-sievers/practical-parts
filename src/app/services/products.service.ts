@@ -7,10 +7,12 @@ import { HTTP_OPTIONS } from 'src/assets/http-options';
 import { LoadingService } from './loading.service';
 
 export interface Variant {
-  id:       number,
-  title:    string,
-  price:    string,
-  quantity: number
+  id:                  number,
+  title:               string,
+  price:               string,
+  inventoryId:         number,
+  inventoryManagement: string,
+  quantity:            number
 }
 
 export interface Product {
@@ -35,7 +37,8 @@ const productFields  = 'id,title,handle,body_html,images,options,variants,create
   providedIn: 'root'
 })
 export class ProductsService {
-  readonly url = `https://cors-anywhere.herokuapp.com/https://${shop}.myshopify.com/admin/api/${version}/products.json`;
+  readonly url          = `https://cors-anywhere.herokuapp.com/https://${shop}.myshopify.com/admin/api/${version}/products.json`;
+  readonly inventoryUrl = `https://cors-anywhere.herokuapp.com/https://${shop}.myshopify.com/admin/api/${version}/inventory_levels.json`;
 
   products:    Observable<Product[]>;
 
@@ -48,7 +51,7 @@ export class ProductsService {
    */
   getProducts(): Observable<Product[]> {
     if (!this.products) {
-      this.products = this.http.get(this.url + `?fields=${productFields}`,
+      this.products = this.http.get('/.netlify/functions/products',
         httpOptions).pipe(
           map( data => {
             const desiredProducts: Product[] = [];
@@ -64,12 +67,14 @@ export class ProductsService {
               const variants: Variant[] = [];
               const productVariants     = product['variants'];
               for (const variant of productVariants) {
-                const id         = variant.id;
-                const title      = variant.title;
-                const price      = variant.price;
-                const quantity   = variant.inventory_quantity;
+                const id                   = variant.id;
+                const title                = variant.title;
+                const price                = variant.price;
+                const inventoryId          = variant.inventory_item_id;
+                const inventoryManagement  = variant.inventory_management
+                const quantity             = variant.inventory_quantity
 
-                const newVariant = { id, title, price, quantity };
+                const newVariant  = { id, title, price, inventoryId, inventoryManagement, quantity };
                 variants.push(newVariant);
               }
 
@@ -85,6 +90,7 @@ export class ProductsService {
           refCount(),
           timeout(30000),
           catchError(e => {
+            console.log('error: ' + e.message)
             return of(null);
           })
       )
@@ -114,12 +120,14 @@ export class ProductsService {
             const variants: Variant[] = [];
             const productVariants     = product['variants'];
             for (const variant of productVariants) {
-              const id         = variant.id;
-              const title      = variant.title;
-              const price      = variant.price;
-              const quantity   = variant.inventory_quantity;
+              const id                  = variant.id;
+              const title               = variant.title;
+              const price               = variant.price;
+              const inventoryId         = variant.inventory_item_id;
+              const inventoryManagement = variant.inventory_management
+              const quantity            = variant.inventory_quantity;
 
-              const newVariant = { id, title, price, quantity };
+              const newVariant  = { id, title, price, inventoryId, inventoryManagement, quantity };
               variants.push(newVariant);
             }
 
@@ -190,9 +198,42 @@ export class ProductsService {
   }
 
   /**
+   * Returns the number available of this variant.
+   * @param variant variant to check quantity of
+   * @returns null if inventory is not tracked.
+   */
+  getAvailable(variant: Variant): number {
+    return variant.inventoryManagement ? variant.quantity : null;
+  }
+
+  /**
+   * Checks whether a variant is available.
+   * @param variant variant to check
+   * @returns true even if inventory level is not tracked
+   */
+  isVariantAvailable(variant: Variant): boolean {
+    return variant.quantity > 0 || !variant.inventoryManagement
+  }
+
+  /**
+   * Checks whether a product is available for any of its variants.
+   * @param product product to check
+   * @returns true even if inventory level is not tracked
+   */
+  isProductAvailable(product: Product): boolean {
+    for (const variant of product.variants) {
+      if (this.isVariantAvailable(variant)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
    * Clear caches containing product information.
    */
   clearCache() {
-    this.products    = null;
+    this.products = null;
   }
 }

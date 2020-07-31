@@ -1,12 +1,11 @@
 import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
-import { ProductsService, Product } from 'src/app/services/products.service';
+import { ProductsService, Product, Variant } from 'src/app/services/products.service';
 import { CollectionsService, Collection } from 'src/app/services/collections.service';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
 import { LoadingService } from 'src/app/services/loading.service';
-import { BehaviorSubject, Observable, range } from 'rxjs';
-import { __values } from 'tslib';
-import { filter } from 'rxjs/operators';
-import { prod } from '@scullyio/scully';
+import { BehaviorSubject } from 'rxjs';
+import { Filter, isFilter, findFilterByName, getFilterNames } from 'src/app/filter';
+import { uniqBy } from 'lodash';
 
 @Component({
   selector: 'app-products',
@@ -35,8 +34,7 @@ export class ProductsComponent implements OnInit {
 
   // filters related variables
   filtersForm:           FormGroup;
-  filters:               string[];
-  priceFilter:           Product[];
+  filters:               Filter[];
 
   // for checking if products are loading
   isLoading:             BehaviorSubject<boolean>; 
@@ -57,10 +55,11 @@ export class ProductsComponent implements OnInit {
 
     this.filtersForm           = this.createFiltersForm();
     this.filters               = [];
-    this.priceFilter           = [];
   }
 
-  get collectionsControl() { return this.filtersForm.get('collections'); }
+  get newOnlyControl()      { return this.filtersForm.get('newOnly') }
+  get hasPictureControl()   { return this.filtersForm.get('hasPicture'); }
+  get collectionsControl()  { return this.filtersForm.get('collections'); }
   get priceControls()       { return this.filtersForm.get('priceRanges') as FormGroup; }
 
   /**
@@ -236,6 +235,13 @@ export class ProductsComponent implements OnInit {
   }
 
   /**
+   * Return a list of products created within the last 6 months.
+   */
+  getNewProducts(): Product[] {
+    return this.productsService.getNewProducts();
+  }
+
+  /**
    * Get all the products from a particular collection and currently published in the store.
    * @param collectionId id of the collection to get products from
    * @param filters a list of products to filter by. If an empty array, then get product anyway
@@ -247,13 +253,9 @@ export class ProductsComponent implements OnInit {
     this.productsService.getProductsByCollection(collectionId).subscribe(
       data => {
         if (data) {
-          console.log(data)
           for (const product of data) {
             if (product.publishedAt && product.id !== 4516235673709) {
-              if (filters) {
-                console.log(filters.includes(product))
-              }
-              if (!filters || !filters.length || filters.includes(product)) {
+              if (!filters || !filters.length || filters.some(p => p.id === product.id)) {
                 desiredProducts.push(product);
               }
             }
@@ -267,6 +269,38 @@ export class ProductsComponent implements OnInit {
     return desiredProducts;
   }
 
+  /**
+   * Checks whether a variant is available.
+   * @param variant variant to check
+   * @returns true even if inventory is not tracked
+   */
+  isVariantAvailable(variant: Variant): boolean {
+    return this.productsService.isVariantAvailable(variant);
+  }
+
+  /**
+   * Checks whether a product is available.
+   * @param product product to check
+   * @returns true even if inventory is not tracked
+   */
+  isProductAvailable(product: Product): boolean {
+    return this.productsService.isProductAvailable(product);
+  }
+
+  /**
+   * Returns the number available of this variant.
+   * @param variant variant to check quantity of
+   * @returns null if inventory is not tracked
+   */
+  getAvailable(variant: Variant): number {
+    return this.productsService.getAvailable(variant);
+  }
+
+
+  /**
+   * Get selected price ranges from the priceControls FormGroup.
+   * @returns an array of the control names for each selection
+   */
   getPriceSelections(): string[] {
     const selections: string[] = [];
 
@@ -279,6 +313,10 @@ export class ProductsComponent implements OnInit {
     return selections;
   }
 
+  getFilterNames(): string[] {
+    return getFilterNames(this.filters);
+  }
+
   /**
    * Apply selected filters and filter the products list to
    * only show those pertaining to the selections.
@@ -286,9 +324,26 @@ export class ProductsComponent implements OnInit {
    * Acts as submission for the filters form.
    */
   applyFilters() {
-    let products:     Product[]   = this.getAllProducts();
-    const newFilters: Set<string> = new Set();
+    this.productsList           = this.getAllProducts();
 
+    let products:     Product[] = this.getAllProducts();
+    const newFilters: Filter[]  = [];
+
+    /** NEW ONLY FILTER */
+    let newProducts: Product[] = [];
+    if (this.newOnlyControl.value) {
+      newFilters.push({name: 'new only', value: this.newOnlyControl});
+      newProducts = this.getNewProducts();
+    }
+
+    /** HAS PICTURE FILTER */
+    let imageProducts: Product[] = [];
+    if (this.hasPictureControl.value) {
+      newFilters.push({name: 'has picture', value: this.hasPictureControl})
+      imageProducts = products.filter(p => p.images.length > 0);
+    }
+
+    /** PRICE RANGE FILTER */
     const priceSelections       = this.getPriceSelections();
     const results: Set<Product> = new Set();
     if (priceSelections.length) {
@@ -297,7 +352,7 @@ export class ProductsComponent implements OnInit {
         this.productsList.forEach( p => {
           switch(s) {
             case 'under10':
-              newFilters.add('$10 and under');
+              newFilters.push({name: '$10 and under', value: this.priceControls.get(s)});
               for (const v of p.variants) {
                 if (Number(v.price) <= 10) {
                   results.add(p);
@@ -306,7 +361,7 @@ export class ProductsComponent implements OnInit {
               }
               break;
             case 'tenTo25':
-              newFilters.add('$10 - $25');
+              newFilters.push({name: '$10 - $25', value: this.priceControls.get(s)});
               for (const v of p.variants) {
                 if (Number(v.price) >= 10 && Number(v.price) <= 25) {
                   results.add(p);
@@ -315,7 +370,7 @@ export class ProductsComponent implements OnInit {
               }
               break;
             case 'twentyFiveTo50':
-              newFilters.add('$25 - $50');
+              newFilters.push({name: '$25 - $50', value: this.priceControls.get(s)});
               for (const v of p.variants) {
                 if (Number(v.price) >= 25 && Number(v.price) <= 50) {
                   results.add(p);
@@ -324,7 +379,7 @@ export class ProductsComponent implements OnInit {
               }
               break;
             case 'fiftyTo75':
-              newFilters.add('$50 - $75');
+              newFilters.push({name: '$50 - $75', value: this.priceControls.get(s)});
               for (const v of p.variants) {
                 if (Number(v.price) >= 50 && Number(v.price) <= 75) {
                   results.add(p);
@@ -333,7 +388,7 @@ export class ProductsComponent implements OnInit {
               }
               break;
             case 'seventyFiveTo100':
-              newFilters.add('$75 - $100');
+              newFilters.push({name: '$75 - $100', value: this.priceControls.get(s)});
               for (const v of p.variants) {
                 if (Number(v.price) >= 75 && Number(v.price) <= 100) {
                   results.add(p);
@@ -342,7 +397,7 @@ export class ProductsComponent implements OnInit {
               }
               break;
             case 'oneHundredTo150':
-              newFilters.add('$100 - $150');
+              newFilters.push({name: '$100 - $150', value: this.priceControls.get(s)});
               for (const v of p.variants) {
                 if (Number(v.price) >= 100 && Number(v.price) <= 150) {
                   results.add(p);
@@ -351,7 +406,7 @@ export class ProductsComponent implements OnInit {
               }
               break;
             case 'oneHundredFiftyTo200':
-              newFilters.add('$150 - $200');
+              newFilters.push({name: '$150 - $200', value: this.priceControls.get(s)});
               for (const v of p.variants) {
                 if (Number(v.price) >= 150 && Number(v.price) <= 200) {
                   results.add(p);
@@ -360,7 +415,7 @@ export class ProductsComponent implements OnInit {
               }
               break;
             case 'above200':
-              newFilters.add('$200 and above');
+              newFilters.push({name: '$200 and above', value: this.priceControls.get(s)});
               for (const v of p.variants) {
                 if (Number(v.price) >= 200) {
                   results.add(p);
@@ -373,17 +428,51 @@ export class ProductsComponent implements OnInit {
       })
     
     }
-    this.priceFilter = [...results];
+    let priceFilter = [...results];
 
+    /** APPLYING THE FILTERS */
     if (this.collectionsControl.value) {
       const value = this.collectionsControl.value.split('_');
 
-      newFilters.add(value[0]);
-      products    = this.getProductsByCollection(value[1], ...this.priceFilter);
+      newFilters.push({name: value[0], value: this.collectionsControl});
+      products   = this.getProductsByCollection(value[1], ...priceFilter, ...newProducts, ...imageProducts);
+    } else {
+      if (newProducts.length) {
+        products = this.productsService.getNewProducts();
+      }
+      if (priceFilter.length) {
+        products = products.filter(p => priceFilter.some(item => item.id === p.id));
+      }
+      if (imageProducts.length) {
+        products = products.filter(p => imageProducts.some(item => item.id === p.id));
+      }
     }
 
-    this.filters      = [...newFilters];
+    this.filters      = uniqBy(newFilters, 'value');
     this.productsList = products;
+  }
+
+  /**
+   * Reset the filters list and get all products.
+   */
+  resetFilters() {
+    this.filters      = [];
+    this.productsList = this.getAllProducts();
+  }
+
+  /**
+   * Remove a selected filter and update the product list to reflect this.
+   * @param filter a filter object or the name of a filter
+   */
+  removeFilter(filter: any) {
+    if (!isFilter(filter)) {
+      filter = findFilterByName(filter, this.filters);
+    }
+
+    this.filters = this.filters.filter(f => f.value !== filter.value);
+    filter.value.reset();
+    
+    this.applyFilters();
   }
 
 }

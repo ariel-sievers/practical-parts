@@ -93,7 +93,10 @@
                         </li>
                     </ul>
                 </div>
-                <button type="submit" class="btn-outline-light-accent">Apply Filters</button>
+                <div>
+                    <button type="submit" class="btn-outline-light-accent">Apply Filters</button>
+                    <button type="reset" (click)="resetFilters()" class="btn-regular">Reset</button>
+                </div>
             </form>
         </ul>
     </div>
@@ -101,14 +104,32 @@
         <div>
             <app-search-bar></app-search-bar>
             <button id="sort" class="btn-dark-accent">sort placeholder</button>
-            <app-tags-list [tags]="filters"></app-tags-list>
+            <app-tags-list [tags]="getFilterNames()" (removed)="removeFilter($event)"></app-tags-list>
         </div>
         <app-loading *ngIf="isLoading | async"></app-loading>
         <div class="grid inner-grid">
-            <app-card *ngFor="let product of productsList">
-                {{ product.title }} <b>${{product.variants[0].price}}</b>
+            <app-card *ngFor="let product of productsList" [ngClass]="{'sold-out': !isProductAvailable(product)}">
+                <app-card-header>
+                    <app-card-title>
+                        {{ product.title }}
+                    </app-card-title>
+                    <app-card-subtitle>
+                        <span *ngIf="isProductAvailable(product) && product.variants.length > 1">starting at&nbsp;</span>
+                        <span class="price">${{ product.variants[0].price }}</span>
+                        <span class="sold-out-text">sold out</span>
+                    </app-card-subtitle>
+                </app-card-header>
+                <ng-container *ngIf="product.images[0]; else noImage">
+                    <img src="{{product.images[0].src}}" cardImage>
+                </ng-container>
+                <ng-template #noImage>
+                    <app-generic-image>This product has no image.</app-generic-image>
+                </ng-template>
+                <app-card-actions class="text-center">
+                    <button class="btn-outline-main">View Details</button>
+                </app-card-actions>
             </app-card>
-            <ng-container *ngIf="!productsList"><p>Timeout occurred. Try reloading the page.</p></ng-container>
+            <p *ngIf="!productsList" class="text-center">Timeout occurred. Try reloading the page.</p>
         </div>
     </div>
 </div>

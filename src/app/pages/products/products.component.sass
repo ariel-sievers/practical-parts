@@ -1,59 +1,89 @@
 @import '../../../assets/variables'
 
 /** PAGE LAYOUT **/
-.grid
-    &.outer-grid
-        grid-template-columns: 300px 1fr
-        grid-gap: 20px
-        padding: 1rem
-            left: 0
-        #filter-pane
-            background-color: $color-main
+
+.outer-grid
+    grid-template-columns: 300px 1fr
+    grid-gap: 20px
+    padding: 1rem
+        left: 0
+    #products-list div:first-child
+        display: grid
+        grid-template-columns: repeat(25, 1fr)
+        app-search-bar
+            grid-column-start: 1
+            grid-column-end: 26
+            grid-row-start: 1
+        #sort
+            align-self: center
+            grid-column-start: 21
+            grid-column-end: 26
+            grid-row-start: 1
+    div:nth-child(2)
+        justify-self: stretch
+
+
+.inner-grid
+    grid-template-columns: repeat(5, 1fr)
+    grid-gap: 1rem
+
+    app-card-header
+        flex-grow: 1
+
+    app-card-actions
+        display: flex
+        flex-grow: 1
+        justify-content: center
+        align-items: flex-end
+
+    app-card-subtitle::ng-deep small
+        span.price, span.sold-out-text
+            font-size: large
+        span.sold-out-text
+            display: none
+
+    .sold-out
+        app-card-subtitle::ng-deep small
+            span.price
+                text-decoration: line-through
+            span.sold-out-text
+                display: inline
+                color: red
+                margin-left: 0.5rem
+
+#filter-pane
+    background-color: $color-main
+    color: $color-light-accent
+    @include box-shadow($soft-shadows)
+    padding: 1rem 0
+    border:
+        radius: 0 4px 4px 0
+    margin-top: 1rem
+    margin-bottom: 1rem
+    user-select: none
+    h1.text-light-italic
+        color: $color-light-accent
+        padding-left: 1rem
+    ul
+        padding: 0
+        text-align: center
+        button
+            margin-top: 1.5rem
+        li
+            display: block
+            padding: 0.5rem 0.75rem 0.5rem 2.5rem
+            list-style: none
             color: $color-light-accent
-            @include box-shadow($soft-shadows)
-            padding: 1rem 0
-            border:
-                radius: 0 4px 4px 0
-            margin-top: 1rem
-            margin-bottom: 1rem
-            user-select: none
-            h1.text-light-italic
-                color: $color-light-accent
-                padding-left: 1rem
-            ul
-                padding: 0
-                text-align: center
-                button
-                    margin-top: 1.5rem
-                li
-                    display: block
-                    padding: 0.5rem 0.75rem 0.5rem 2.5rem
-                    list-style: none
-                    color: $color-light-accent
-                    font-size: 1.5rem
-                    text-align: left
-                    border-bottom: 1px solid $color-light-accent
-                    label
-                        display: block
-                        font-size: 1.5rem
-                        &:hover
-                            cursor: pointer
-                    &:hover:not(#collections)
-                        background-color: $color-main-lighter
-        #products-list div:first-child
-            display: grid
-            grid-template-columns: repeat(25, 1fr)
-            app-search-bar
-                grid-column-start: 1
-                grid-column-end: 26
-                grid-row-start: 1
-            #sort
-                align-self: center
-                grid-column-start: 21
-                grid-column-end: 26
-                grid-row-start: 1
-        div:nth-child(2)
-            justify-self: stretch
+            font-size: 1.5rem
+            text-align: left
+            border-bottom: 1px solid $color-light-accent
+            label
+                display: block
+                font-size: 1.5rem
+                &:hover
+                    cursor: pointer
+            &:hover:not(#collections)
+                background-color: $color-main-lighter
 
 
 #collections, #priceRange + div
@@ -148,6 +178,9 @@ input[type="radio"]
         bottom: 3px
         background-color: $color-light-accent
 
+button[type="reset"]
+    color: $color-light-accent
+    font-weight: bold
 
 
 /** 'SIMPLE' VERSION OF APP-SEARCH-BAR **/

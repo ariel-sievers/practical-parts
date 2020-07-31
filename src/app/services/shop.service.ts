@@ -57,7 +57,6 @@ export class ShopService {
           }),
           publishReplay(3), 
           refCount(),
-          timeout(30000),
           catchError(e => {
             return of(null);
           })
@@ -86,7 +85,6 @@ export class ShopService {
           }),
           publishReplay(1), 
           refCount(),
-          timeout(30000),
           catchError(e => {
             return of(null);
           })

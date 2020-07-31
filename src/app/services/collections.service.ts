@@ -58,7 +58,6 @@ export class CollectionsService {
           }),
           publishReplay(1), 
           refCount(),
-          timeout(30000),
           catchError(e => {
             return of(null);
           })
@@ -91,8 +90,7 @@ export class CollectionsService {
             return desiredCollections;
           }),
           publishReplay(1), 
-          refCount(),
-          timeout(30000),
+          refCount(),     
           catchError(e => {
             return of(null);
           })
@@ -118,7 +116,6 @@ export class CollectionsService {
           const newCollection   = { id, title, handle, description, image, publishedAt };
           return newCollection;
         }),
-        timeout(30000),
         catchError(e => {
           return of(null);
         })
