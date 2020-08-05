@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "config": "ts-node ./scripts/setenv.ts",
-    "start": "npm run config -- --environment=dev && ng build && npm run scully && npm run scully:serve",
-    "build": "npm run config -- --environment=prod && ng build --prod",
+    "start": "npm run config -- --environment=dev && ng build && ng serve",
+    "build": "npm run config -- --environment=prod && ng build --prod && npm run scully",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -29,6 +29,7 @@
     "@types/express": "^4.17.7",
     "aos": "^2.3.4",
     "cors-anywhere": "^0.4.3",
+    "encoding": "^0.1.13",
     "jquery": "^3.5.1",
     "normalize.css": "^8.0.1",
     "rxjs": "~6.6.0",

@@ -1,8 +1,10 @@
 /* eslint-disable */
 const fetch = require('node-fetch');
 
-var fields = 'id,title,handle,body_html,images,options,variants,created_at,published_at'
-var url = `https://practical-parts.myshopify.com/admin/api/${process.env.API_VERSION}/products.json?fields=${fields}`
+const contactInfoFields  = 'customer_email,phone,shop_owner'
+const addressFields = 'address1,address2,city,province,zip,country'
+
+var fields = ''
 
 exports.handler = async function(event, context) {
   const headers = {
@@ -11,10 +13,14 @@ exports.handler = async function(event, context) {
   };
 
   // get products by id if one is given
-  const collectionId = event.queryStringParameters.collection_id
-  if (collectionId) {
-    url = url.concat(`&collection_id=${collectionId}`)
+  const fieldType = event.queryStringParameters.collection_id
+  if (fieldType === 'address') {
+    fields = addressFields
+  } else {
+    fields = contactInfoFields
   }
+
+  const url = `https://practical-parts.myshopify.com/admin/api/${process.env.API_VERSION}/shop.json?fields=${fields}`
 
   try {
     const response = await fetch(url, {
@@ -38,3 +44,4 @@ exports.handler = async function(event, context) {
     }
   }
 }
+

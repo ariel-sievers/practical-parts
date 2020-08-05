@@ -16,10 +16,20 @@ section
     text-align: justify
     &#new .grid
         margin: 0 auto
+            top: 1rem
         grid-template-columns: repeat(3, 1fr)
         grid-template-rows: auto
         grid-gap: 1rem
         text-align: left
+        transition: opacity 1s ease-out
+        opacity: 0
+        height: 0
+        overflow: hidden
+        &.shown
+            opacity: 1
+            height: auto
+    
+
 
 .extra-info
     padding-bottom: 5rem

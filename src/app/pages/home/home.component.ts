@@ -6,7 +6,6 @@ import { SlideshowService } from 'src/app/services/slideshow.service';
 import { ProductsService, Product } from 'src/app/services/products.service';
 import { CollectionsService } from 'src/app/services/collections.service';
 import { BehaviorSubject } from 'rxjs';
-import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +16,9 @@ export class HomeComponent implements OnInit {
   slides:      Slide[];
   newProducts: Product[];
 
-  isLoading: BehaviorSubject<boolean>; // loading new products
+  showNew:     boolean;                  // for hiding/showing new products
+
+  isLoading:   BehaviorSubject<boolean>; // loading new products
 
   constructor(public shopService: ShopService, public productsService: ProductsService,
     public collectionsService: CollectionsService, public slideshowService: SlideshowService,
@@ -27,7 +28,6 @@ export class HomeComponent implements OnInit {
     this.slides = this.getSlideshow();
     this.loadCache();
     this.isLoading   = this.productsService.isLoading;
-    this.newProducts = this.getNewProducts();
   }
 
   private loadCache() {
@@ -49,8 +49,10 @@ export class HomeComponent implements OnInit {
    * Products will not show if they are not currently published on the site.
    */
   getNewProducts(): Product[] {
+    this.showNew = !this.showNew;
+
     if (this.newProducts) { return; }
-    return this.productsService.getNewProducts();
+    this.newProducts = this.productsService.getNewProducts();
   }
 
 }

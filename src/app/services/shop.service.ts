@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { map, publishReplay, refCount, timeout, catchError } from 'rxjs/operators';
-import { HTTP_OPTIONS } from 'src/assets/http-options';
 
 export interface Address {
   address1: string,
@@ -14,18 +12,11 @@ export interface Address {
   country: string
 }
 
-const httpOptions = HTTP_OPTIONS;
-
-const version            = environment.API_VERSION;
-const shop               = 'practical-parts';
-const contactInfoFields  = 'customer_email,phone,shop_owner';
-const addressFields      = 'address1,address2,city,province,zip,country';
-
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
-  readonly url     = `https://cors-anywhere.herokuapp.com/https://${shop}.myshopify.com/admin/api/${version}/shop.json`;
+  readonly url     = `/.netlify/functions/shop`;
 
   address:     Observable<Address>;
   contactInfo: Observable<string[]>;
@@ -46,8 +37,8 @@ export class ShopService {
    */
   getShopContactInfo(): Observable<string[]> {
     if (!this.contactInfo) {
-      this.contactInfo = this.http.get(this.url + `?fields=${contactInfoFields}`,
-        httpOptions).pipe(
+      this.contactInfo = this.http.get(`${this.url}?fieldType=contactInfo`)
+      .pipe(
           map( data => {
             const email = data['shop']['customer_email']
             const phone = this.toPhoneFormat(data['shop']['phone']);
@@ -71,8 +62,8 @@ export class ShopService {
    */
   getShopAddress(): Observable<Address> {
     if (!this.address) {
-      this.address = this.http.get(this.url + `?fields=${addressFields}`,
-        httpOptions).pipe(
+      this.address = this.http.get(`${this.url}?fieldType=address`)
+      .pipe(
           map( data => {
             const address1  = data['shop']['address1'];
             const address2  = data['shop']['address2'];

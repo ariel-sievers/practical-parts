@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { map, publishReplay, refCount, timeout, catchError } from 'rxjs/operators';
-import { HTTP_OPTIONS } from 'src/assets/http-options';
 import { LoadingService } from './loading.service';
 
 export interface Variant {
@@ -27,18 +25,11 @@ export interface Product {
   publishedAt: string
 }
 
-const httpOptions = HTTP_OPTIONS;
-
-const version        = environment.API_VERSION;
-const shop           = 'practical-parts';
-const productFields  = 'id,title,handle,body_html,images,options,variants,created_at,published_at';
-
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-  readonly url          = `https://cors-anywhere.herokuapp.com/https://${shop}.myshopify.com/admin/api/${version}/products.json`;
-  readonly inventoryUrl = `https://cors-anywhere.herokuapp.com/https://${shop}.myshopify.com/admin/api/${version}/inventory_levels.json`;
+  readonly url = `/.netlify/functions/products`;
 
   products:    Observable<Product[]>;
 
@@ -51,8 +42,8 @@ export class ProductsService {
    */
   getProducts(): Observable<Product[]> {
     if (!this.products) {
-      this.products = this.http.get('/.netlify/functions/products',
-        httpOptions).pipe(
+      this.products = this.http.get(this.url)
+      .pipe(
           map( data => {
             const desiredProducts: Product[] = [];
             const products                   = data['products'];
@@ -103,8 +94,9 @@ export class ProductsService {
    * @param collectionId the id of the collection to get products from
    */
   getProductsByCollection(collectionId: number): Observable<Product[]> {
-    return this.http.get(this.url + `?fields=${productFields}&collection_id=${collectionId}`,
-      httpOptions).pipe(
+
+    return this.http.get(`${this.url}?collection_id=${collectionId}`)
+      .pipe(
         map( data => {
           const desiredProducts: Product[] = [];
           const products                   = data['products'];

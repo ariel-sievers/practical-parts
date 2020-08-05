@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
-import { map, publishReplay, refCount, timeout, catchError } from 'rxjs/operators';
-import { HTTP_OPTIONS } from '../../assets/http-options'
-import { FormGroup, FormControl } from '@angular/forms';
+import { map, publishReplay, refCount, catchError } from 'rxjs/operators';
 
 export interface Collection {
   id:          number,
@@ -15,18 +12,12 @@ export interface Collection {
   publishedAt: string
 }
 
-const httpOptions = HTTP_OPTIONS;
-
-const version           = environment.API_VERSION;
-const shop              = 'practical-parts';
-const collectionFields  = 'id,title,handle,body_html,image,published_at';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CollectionsService {
-  readonly customUrl = `https://cors-anywhere.herokuapp.com/https://${shop}.myshopify.com/admin/api/${version}/custom_collections.json`;
-  readonly smartUrl  =  `https://cors-anywhere.herokuapp.com/https://${shop}.myshopify.com/admin/api/${version}/smart_collections.json`;
+  readonly url = '/.netlify/functions/collections';
 
   customCollections: Observable<Collection[]>;
   smartCollections:  Observable<Collection[]>;
@@ -38,8 +29,8 @@ export class CollectionsService {
    */
   getCustomCollections(): Observable<Collection[]> {
     if (!this.customCollections) {
-      this.customCollections = this.http.get(this.customUrl + `?fields=${collectionFields}`,
-        httpOptions).pipe(
+      this.customCollections = this.http.get(`${this.url}?type=custom`)
+      .pipe(
           map( data => {
             const desiredCollections: Collection[] = [];
             const collections                      = data['custom_collections'];
@@ -71,8 +62,8 @@ export class CollectionsService {
    */
   getSmartCollections(): Observable<Collection[]> {
     if (!this.smartCollections) {
-      this.smartCollections = this.http.get(this.smartUrl + `?fields=${collectionFields}`,
-        httpOptions).pipe(
+      this.smartCollections = this.http.get(`${this.url}?type=smart`)
+      .pipe(
           map( data => {
             const desiredCollections: Collection[] = [];
             const collections                      = data['smart_collections'];
@@ -100,9 +91,8 @@ export class CollectionsService {
   }
 
   getCollectionById(id: number) {
-    return this.http.get(
-      `https://cors-anywhere.herokuapp.com/https://${shop}.myshopify.com/admin/api/2020-07/collections/${id}.json?fields=${collectionFields}`,
-      httpOptions).pipe(
+    return this.http.get(`${this.url}?id=${id}`)
+    .pipe(
         map( data => {
           const collection = data['collection'];
 

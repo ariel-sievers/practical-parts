@@ -1,8 +1,9 @@
 /* eslint-disable */
 const fetch = require('node-fetch');
 
-var fields = 'id,title,handle,body_html,images,options,variants,created_at,published_at'
-var url = `https://practical-parts.myshopify.com/admin/api/${process.env.API_VERSION}/products.json?fields=${fields}`
+var fields = 'id,title,handle,body_html,image,published_at'
+var type = ''
+var id = ''
 
 exports.handler = async function(event, context) {
   const headers = {
@@ -10,11 +11,19 @@ exports.handler = async function(event, context) {
     'Authorization': `Basic ${process.env.BASE_64_STRING}`
   };
 
-  // get products by id if one is given
-  const collectionId = event.queryStringParameters.collection_id
-  if (collectionId) {
-    url = url.concat(`&collection_id=${collectionId}`)
+  const typeParam = event.queryStringParameters.type
+  if (typeParam) {
+    type = typeParam.concat('_')
   }
+
+  // get collection by id if one is given
+  const idParam = event.queryStringParameters.id
+  if (idParam) {
+    id = id.concat(`/${idParam}`)
+  }
+
+  const url = `https://practical-parts.myshopify.com/admin/api/${process.env.API_VERSION}/${type}collections${id}.json?fields=${fields}`
+  console.log(url)
 
   try {
     const response = await fetch(url, {
