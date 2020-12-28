@@ -1,6 +1,6 @@
 # PracticalParts
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.25. It is currently in development for Practical Parts LLC and a demo is available [here](https://practical-parts.netlify.app). This project utilizes TypeScript, HTML, SASS, and the Shopify API.
+It is currently in development for Practical Parts LLC and a demo is available [here](https://practical-parts.netlify.app). This project utilizes TypeScript, HTML, SASS, and the Shopify API. Since it uses a private API key that must be hidden from this repository, the project cannot be run on its own.
 
 ## Development server
 
