@@ -1,6 +1,8 @@
 # PracticalParts
 
-It is currently in development for Practical Parts LLC and a demo is available [here](https://practical-parts.netlify.app). This project utilizes TypeScript, HTML, SASS, and the Shopify API. Since it uses a private API key that must be hidden from this repository, the project cannot be run on its own.
+It is currently in development for Practical Parts LLC and a demo is available [here](https://practical-parts.netlify.app).
+
+This project utilizes TypeScript, HTML, SASS, and the Shopify API. Since it uses a private API key that must be hidden from this repository, the project cannot be run on its own.
 
 ## Development server
 
